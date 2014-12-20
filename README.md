@@ -1,4 +1,4 @@
-# Eligible
+# Eligible - Inbox Health Fork
 
 Ruby bindings for the [Eligible API](https://eligibleapi.com/rest-api-v1)
 
