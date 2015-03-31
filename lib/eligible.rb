@@ -80,12 +80,12 @@ module Eligible
 
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
     ua = {
-      :bindings_version => Eligible::VERSION,
-      :lang => 'ruby',
-      :lang_version => lang_version,
-      :platform => RUBY_PLATFORM,
-      :publisher => 'eligible',
-      :uname => uname
+        :bindings_version => Eligible::VERSION,
+        :lang => 'ruby',
+        :lang_version => lang_version,
+        :platform => RUBY_PLATFORM,
+        :publisher => 'eligible',
+        :uname => uname
     }
 
     # GET requests, parameters on the query string
@@ -101,33 +101,33 @@ module Eligible
         url +="&test=#{test}"
         payload = nil
       else
-        payload = Eligible::JSON.dump(params.merge!({ 'api_key' => api_key, 'test' => test }))
+        payload = Eligible::JSON.dump(params.merge!({'api_key' => api_key, 'test' => test}))
     end
 
     begin
-      headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
+      headers = {:x_eligible_client_user_agent => Eligible::JSON.dump(ua)}.merge(headers)
     rescue => e
       headers = {
-        :x_eligible_client_raw_user_agent => ua.inspect,
-        :error => "#{e} (#{e.class})"
+          :x_eligible_client_raw_user_agent => ua.inspect,
+          :error => "#{e} (#{e.class})"
       }.merge(headers)
     end
 
     headers = {
-      :user_agent => "Eligible/v1 RubyBindings/#{Eligible::VERSION}",
-      :authorization => "Bearer #{api_key}",
-      :content_type => 'application/x-www-form-urlencoded'
+        :user_agent => "Eligible/v1 RubyBindings/#{Eligible::VERSION}",
+        :authorization => "Bearer #{api_key}",
+        :content_type => 'application/x-www-form-urlencoded'
     }.merge(headers)
 
     headers[:eligible_version] = self.api_version if self.api_version
 
     opts = {
-      :method => method,
-      :url => url,
-      :headers => headers,
-      :open_timeout => 30,
-      :payload => payload,
-      :timeout => 80
+        :method => method,
+        :url => url,
+        :headers => headers,
+        :open_timeout => 30,
+        :payload => payload,
+        :timeout => 80
     }
 
     begin
@@ -190,7 +190,11 @@ module Eligible
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
-    error_msg = error[:details] or error[:reject_reason_description]
+    error_msg = if error.is_a? Hash
+              error.fetch(:details, nil) or error.fetch(:reject_reason_description, nil)
+            else
+              error
+            end
 
     case rcode
       when 400, 404 then
