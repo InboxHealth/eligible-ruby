@@ -9,7 +9,7 @@ module Eligible
       end
 
       def cost_estimate(params, api_key=nil)
-        response, api_key = Eligible.request(:get, '/coverage/cost_estimate.json', api_key, params)
+        response, api_key = Eligible.request(:get, '/coverage/cost_estimates.json', api_key, params)
         Util.convert_to_eligible_object(response, api_key)
       end
 
