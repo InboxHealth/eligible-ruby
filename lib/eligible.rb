@@ -235,7 +235,12 @@ module Eligible
     RestClient::Request.execute(opts)
   end
 
-  def self.error_message(error)
+  def self.error_message(error, errors)
+    if errors.is_a?(Array)
+      return errors.first[:message] if errors.size == 1
+      return errors.each_with_index.map { |error, index| "#{index + 1}. #{error[:message]}" }.join("\n")
+    end
+
     return error.to_s unless error.is_a?(Hash)
     result = error[:details] || error[:reject_reason_description] || error
     return result.to_s
@@ -243,15 +248,16 @@ module Eligible
 
   def self.handle_api_error(rcode, rbody)
     begin
-      error_obj = Eligible::JSON.load(rbody)
-      error_obj = Util.symbolize_names(error_obj)
-      fail EligibleError unless error_obj.key?(:error)
+      error_obj = Util.symbolize_names(Eligible::JSON.load(rbody))
+      fail EligibleError unless error_obj.keys.any?{|k| [:error, :errors].include? k}
       error = error_obj[:error]
+      errors = error_obj[:errors]
+
     rescue MultiJson::DecodeError, EligibleError
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
-    error_msg = error_message(error)
+    error_msg = error_message(error, errors)
 
     case rcode
     when 400, 404 then
