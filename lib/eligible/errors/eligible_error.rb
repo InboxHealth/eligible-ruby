@@ -14,7 +14,7 @@ module Eligible
 
     def to_s
       status_string = @http_status.nil? ? '' : "(Status #{@http_status}) "
-      "#{status_string}#{@message}"
+      "#{status_string}#{@message}: #{@errors.to_json}"
     end
   end
 end
