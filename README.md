@@ -661,7 +661,7 @@ This is the list of errors thrown from the eligible ruby gem.
 7. ArgumentError - Raised when all the required params are not provided.
 
 ### Handling Errors
-Raise Errors have details in `message`, `http_code`, `body`, and `errors` attributes
+Raise Errors have details in `message`, `http_code`, `http_body`, `json_body`, and `errors` attributes
 
 ```ruby
 def call_eligible(request_params)
