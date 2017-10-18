@@ -90,7 +90,7 @@ the parameter `service_type`, required on the api calls, is provided
 by Eligible from its website, in xml and json format, which you can
 embed into your applications.
 
-[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)  
+[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)
 [https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
 
 ## Place of Service
@@ -450,7 +450,7 @@ Eligible::Ticket.all
 ### Create a customer
 
 ```ruby
-customer_params = { customer: { name: "ABC company", 
+customer_params = { customer: { name: "ABC company",
                                 site_name: "ABC site name"
                               }
                   }
@@ -579,7 +579,7 @@ response.to_hash
 params = { payer_id: '12345' }
 response = Eligible::Payer.search_options(params)
 response.to_hash
-``` 
+```
 
 ### Search options for all payers
 
@@ -660,8 +660,9 @@ This is the list of errors thrown from the eligible ruby gem.
 6. NotImplementedError - Raised when the functionality you are trying to use doesn't exist.
 7. ArgumentError - Raised when all the required params are not provided.
 
-### Handling Errors
-Raise Errors have details in `message`, `http_code`, `http_body`, `json_body`, and `errors` attributes
+### Error Handling
+
+Raised errors have details in `message`, `http_code`, `http_body`, `json_body`, and `errors` attributes:
 
 ```ruby
 def call_eligible(request_params)
