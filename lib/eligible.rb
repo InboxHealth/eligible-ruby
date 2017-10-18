@@ -236,11 +236,20 @@ module Eligible
   end
 
   def self.error_message(error, errors)
-    if errors.is_a?(Array)
-      return errors.first[:message] if errors.size == 1
-      return errors.each_with_index.map { |error, index| "#{index + 1}. #{error[:message]}" }.join("\n")
-    end
+    message = compose_message_from_errors(errors)
+    return message if message
 
+    return compose_message_from_error(error)
+  end
+
+  def self.compose_message_from_errors(errors)
+    return unless errors.is_a?(Array)
+
+    return errors.first[:message] if errors.size == 1
+    return errors.each_with_index.map { |error, index| "#{index + 1}. #{error[:message]}" }.join("\n")
+  end
+
+  def self.compose_message_from_error(error)
     return error.to_s unless error.is_a?(Hash)
     result = error[:details] || error[:reject_reason_description] || error
     return result.to_s
@@ -249,7 +258,7 @@ module Eligible
   def self.handle_api_error(rcode, rbody)
     begin
       error_obj = Util.symbolize_names(Eligible::JSON.load(rbody))
-      fail EligibleError unless error_obj.keys.any?{|k| [:error, :errors].include? k}
+      fail EligibleError unless error_obj.keys.any? { |k| [:error, :errors].include? k }
       error = error_obj[:error]
       errors = error_obj[:errors]
 
