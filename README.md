@@ -648,6 +648,33 @@ response = Eligible::Referral.create(params)
 response.to_hash
 ```
 
+## Session Tokens
+
+### Reference
+[https://account.eligible.com/docs/account#session-tokens](https://account.eligible.com/docs/account#session-tokens)
+
+### Retrieve session token
+
+```ruby
+params = { endpoints: 'coverage, cost_estimates, visit_types, payer_list',
+           ttl_seconds: 300,
+           max_calls: 50
+         }
+result = Eligible::SessionToken.create(params)
+result.to_hash # returns all session token info for the request
+result.error # returns error, if any
+```
+
+### Revoke session token
+
+```ruby
+params = { session_token: 'session-token-to-revoke' }
+result = Eligible::SessionToken.revoke(params)
+result.to_hash # returns all session token info for the request
+result.error # returns error, if any
+```
+
+
 ## Errors
 
 This is the list of errors thrown from the eligible ruby gem.
