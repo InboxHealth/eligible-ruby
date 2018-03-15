@@ -9,5 +9,7 @@ module Eligible
       setup_file(params)
       send_request(:post, '/card_scans.json', api_key, params)
     end
+
+    private_class_method :setup_file
   end
 end
