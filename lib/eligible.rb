@@ -107,12 +107,13 @@ module Eligible
   end
 
   def self.request(method, url, api_key, params = {}, headers = {})
-    api_key ||= @@api_key
+    session_token = Util.value(params, :session_token)
+    api_key ||= @@api_key unless session_token
     test = self.test
     api_key = Util.value(params, :api_key) if api_key?(params)
     test = Util.value(params, :test) if test_key?(params)
 
-    fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key
+    fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key || session_token
 
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
     debug_info = {
