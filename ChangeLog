@@ -1,3 +1,9 @@
+2018-03-26 Eligible  <support@eligible.com>
+
+	* 2.9.2
+	- We can use session token or api_key for making a Eligible Call
+	- for session token supported endpoints
+
 2017-10-04 Eligible  <support@eligible.com>
 
 	* 2.9.0
