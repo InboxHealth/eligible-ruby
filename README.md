@@ -674,6 +674,12 @@ result.to_hash # returns all session token info for the request
 result.error # returns error, if any
 ```
 
+### Use session token without api_key
+
+```ruby
+Eligible::Coverage.get({:session_token => 'SESSION_TOKEN', :test => false})
+```
+
 
 ## Errors
 
