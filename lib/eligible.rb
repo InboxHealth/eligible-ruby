@@ -33,6 +33,9 @@ require 'eligible/referral'
 require 'eligible/public_key'
 require 'eligible/lockbox'
 require 'eligible/session_token'
+require 'eligible/visit_type'
+require 'eligible/provider_detail'
+require 'eligible/calculator_deploy_url'
 
 # Errors
 require 'eligible/errors/eligible_error'
