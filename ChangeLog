@@ -1,3 +1,9 @@
+2018-04-25 Eligible  <support@eligible.com>
+
+	* 2.9.3
+	- Rename endpoint provider_detail to provider_model
+	- Added specs
+
 2018-04-19 Eligible  <support@eligible.com>
 
 	* 2.9.3
