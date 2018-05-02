@@ -34,7 +34,7 @@ require 'eligible/public_key'
 require 'eligible/lockbox'
 require 'eligible/session_token'
 require 'eligible/visit_type'
-require 'eligible/provider_detail'
+require 'eligible/provider_model'
 require 'eligible/calculator_deploy_url'
 
 # Errors
