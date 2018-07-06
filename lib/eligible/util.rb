@@ -77,7 +77,7 @@ module Eligible
       result = []
       value.each_with_index do |elem, index|
         if elem.is_a?(Hash)
-          result += flatten_params(elem, calculated_key)
+          result += flatten_params(elem, "#{calculated_key}[]")
         elsif elem.is_a?(Array)
           result += flatten_params_array(elem, calculated_key)
         else
