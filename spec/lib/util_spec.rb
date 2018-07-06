@@ -84,6 +84,16 @@ describe 'Eligible::Util' do
       params = { test: { x: 'a&b', y: [ 'c&d' ] } }
       expect(Eligible::Util.flatten_params(params)).to eq [["test[x]", "a&b"], ["test[y][0]", "c&d"]]
     end
+
+    it "should flatten the params when array of hashes exist" do
+      params = { test: [{ a: 'x&y', b: 'y&z'}, { c: 'x&z', d: 'z&x'}] }
+      expect(Eligible::Util.flatten_params(params)).to eq [["test[][a]", "x&y"], ["test[][b]", "y&z"], ["test[][c]", "x&z"], ["test[][d]", "z&x"]]
+    end
+
+    it "should flatten the params when nested array of hashes exist" do
+      params = { test: { x: 'a&b', y: [ 'c&d' ], z: [{ a: 'x&y', b: 'y&z'}, { c: 'x&z', d: 'z&x'}] } }
+      expect(Eligible::Util.flatten_params(params)).to eq [["test[x]", "a&b"], ["test[y][0]", "c&d"], ["test[z][][a]", "x&y"], ["test[z][][b]", "y&z"], ["test[z][][c]", "x&z"], ["test[z][][d]", "z&x"]]
+    end
   end
 
   describe '.flatten_params_array' do
