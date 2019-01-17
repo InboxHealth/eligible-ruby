@@ -50,8 +50,8 @@ module Eligible
   @@test = false
   @@api_version = '1.5'
   @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
-  @@fingerprints = %w(de4cdd0aae26df71290f0373af18e9ee7ecff18c
-                      9df5f186fb20ad25ffd864942a6394840b02a480)
+  @@fingerprints = %w(9df5f186fb20ad25ffd864942a6394840b02a480
+                      a1cd762a9f4be0f3b6bdd6300e52c6ce8d7d67f5)
 
   def self.api_url(url = '')
     @@api_base + url.to_s
