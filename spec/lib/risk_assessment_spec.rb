@@ -19,4 +19,11 @@ describe 'RiskAssessment' do
       expect(Eligible::RiskAssessment.cost_estimate(params, api_key)).to eq 'success'
     end
   end
+
+  describe '.fetch' do
+    it 'should call Eligible.request with proper url' do
+      allow(Eligible).to receive(:request).with(:get, '/risk_assessments/fetch.json', api_key, params).and_return([response, api_key])
+      expect(Eligible::RiskAssessment.fetch(params, api_key)).to eq 'success'
+    end
+  end
 end
