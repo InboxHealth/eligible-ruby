@@ -1,0 +1,78 @@
+version: 2
+default_environment: &default_environment
+  docker:
+    - image: circleci/ruby:2.2-jessie-browsers
+      environment:
+        BUNDLE_JOBS: 3
+        BUNDLE_RETRY: 3
+        BUNDLE_PATH: vendor/bundle
+        RAILS_ENV: test
+        CODACY_BASE_API_URL: https://codacy.eligiblecorp.net:16006
+  working_directory: ~/eligible-ruby
+
+aliases:
+  # Bundle install dependencies
+  - &bundle_install
+      name: Bundle Install
+      command: bundle check || (bundle install --deployment && bundle clean) # Stop growing cache
+  - &save_bundle_cache
+      key: gems-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+        - /usr/local/bundle/config
+  - &restore_bundle_cache
+      keys:
+        - gems-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
+        - gems-{{ .Environment.CACHE_VERSION }}-      # Fallback to any recent cache
+
+  # Modules setup
+  - &fetch_cc_test_reporter
+      name: Fetch CC Test Reporter
+      command: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
+
+  - &pre_build
+      name: Pre build
+      command: ./cc-test-reporter before-build
+
+  # Running Tests and submit coverage
+  - &submit_cc
+      name: submit_cc
+      command:  ./cc-test-reporter after-build --exit-code $EXIT_CODE --coverage-input-type simplecov
+
+jobs:
+  bundle_dependencies:
+    <<: *default_environment
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache: *restore_bundle_cache
+      # Bundle install dependencies
+      - run: *bundle_install
+      # Store bundle cache
+      - save_cache: *save_bundle_cache
+
+  tests:
+    <<: *default_environment
+    parallelism: 2
+    steps:
+      - checkout
+
+      - restore_cache: *restore_bundle_cache
+
+    pre-steps:
+      - run: *fetch_cc_test_reporter
+      - run: *pre_build
+    post-steps:
+      - run: *submit_cc
+
+
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - bundle_dependencies
+      - tests:
+         requires:
+           - bundle_dependencies
