@@ -1,6 +1,8 @@
 # Eligible
 
-[![Circle CI](https://circleci.com/gh/eligible/eligible-ruby.svg?style=svg)](https://circleci.com/gh/eligible/eligible-ruby) [![Code Climate](https://codeclimate.com/github/eligible/eligible-ruby/badges/gpa.svg)](https://codeclimate.com/github/eligible/eligible-ruby)
+[![CircleCI](https://circleci.com/gh/eligible/eligible-ruby/tree/master.svg?style=svg&circle-token=2217025edb5af2901121d277f96ace65dc47f306)](https://circleci.com/gh/eligible/eligible-ruby/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d86aadd0f6670a2548d8/maintainability)](https://codeclimate.com/repos/56cca689c952c60085003f10/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d86aadd0f6670a2548d8/test_coverage)](https://codeclimate.com/repos/56cca689c952c60085003f10/test_coverage)
 
 Ruby bindings for the [Eligible API](https://eligible.com/rest)
 
