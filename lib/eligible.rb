@@ -37,6 +37,7 @@ require 'eligible/visit_type'
 require 'eligible/provider_model'
 require 'eligible/calculator_deploy_url'
 require 'eligible/risk_assessment'
+require 'eligible/icd'
 
 # Errors
 require 'eligible/errors/eligible_error'
