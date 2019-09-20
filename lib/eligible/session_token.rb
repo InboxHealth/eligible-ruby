@@ -1,11 +1,11 @@
 module Eligible
   class SessionToken < APIResource
-    def self.create(params, api_key = nil)
-      send_request(:post, '/session_tokens/create.json', api_key, params)
+    def self.create(params, opts = {})
+      send_request(:post, '/session_tokens/create.json', opts[:api_key], params, Util.eligible_account_headers(opts))
     end
 
-    def self.revoke(params, api_key = nil)
-      send_request(:post, '/session_tokens/revoke.json', api_key, params)
+    def self.revoke(params, opts = {})
+      send_request(:post, '/session_tokens/revoke.json', opts[:api_key], params, Util.eligible_account_headers(opts))
     end
   end
 end

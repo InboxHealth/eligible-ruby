@@ -3,12 +3,12 @@ require 'base64'
 
 module Eligible
   class Lockbox < APIResource
-    def self.get(params, api_key = nil)
-      send_request(:get, api_url('lockboxes', params, :lockbox_id), api_key, params, :lockbox_id)
+    def self.get(params, opts = {})
+      send_request(:get, api_url('lockboxes', params, :lockbox_id), opts[:api_key], params, Util.eligible_account_headers(opts), :lockbox_id)
     end
 
-    def self.all(params, api_key = nil)
-      send_request(:get, api_url('lockboxes'), api_key, params)
+    def self.all(params, opts = {})
+      send_request(:get, api_url('lockboxes'), opts[:api_key], params, Util.eligible_account_headers(opts))
     end
 
     def self.extract_private_key(params)
@@ -29,10 +29,10 @@ module Eligible
       Encryptor.decrypt(value: Base64.decode64(data), key: sha_key, insecure_mode: true)
     end
 
-    def self.get_and_decrypt_from_lockbox(params, api_key = nil)
+    def self.get_and_decrypt_from_lockbox(params, opts = {})
       private_key = extract_private_key(params)
       delete_private_key!(params)
-      req = get(params, api_key).to_hash
+      req = get(params, opts).to_hash
       decrypt_data(req[:encrypted_data], req[:encrypted_key], private_key)
     end
   end

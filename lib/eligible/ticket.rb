@@ -13,28 +13,28 @@ module Eligible
       end
     end
 
-    def self.create(params, api_key = nil)
-      send_request(:post, ticket_url, api_key, params)
+    def self.create(params, opts = {})
+      send_request(:post, ticket_url, opts[:api_key], params, Util.eligible_account_headers(opts))
     end
 
-    def self.comments(params, api_key = nil)
-      send_request(:post, ticket_url(params, true), api_key, params, :id)
+    def self.comments(params, opts = {})
+      send_request(:post, ticket_url(params, true), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
     end
 
-    def self.all(params, api_key = nil)
-      send_request(:get, ticket_url, api_key, params)
+    def self.all(params, opts = {})
+      send_request(:get, ticket_url, opts[:api_key], params, Util.eligible_account_headers(opts))
     end
 
-    def self.get(params, api_key = nil)
-      send_request(:get, ticket_url(params), api_key, params, :id)
+    def self.get(params, opts = {})
+      send_request(:get, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
     end
 
-    def self.delete(params, api_key = nil)
-      send_request(:delete, ticket_url(params), api_key, params, :id)
+    def self.delete(params, opts = {})
+      send_request(:delete, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
     end
 
-    def self.update(params, api_key = nil)
-      send_request(:put, ticket_url(params), api_key, params, :id)
+    def self.update(params, opts = {})
+      send_request(:put, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
     end
   end
 end

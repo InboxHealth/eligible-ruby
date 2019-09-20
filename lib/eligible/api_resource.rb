@@ -24,12 +24,12 @@ module Eligible
       fail ArgumentError, "#{name} of the #{class_name} is required" if value.nil? || (value.is_a?(String) && value.empty?)
     end
 
-    def self.send_request(method, url, api_key, params, required_param_name = nil)
+    def self.send_request(method, url, api_key, params, headers, required_param_name = nil)
       unless required_param_name.nil?
         required_param = Util.value(params, required_param_name)
         require_param(required_param, required_param_name)
       end
-      response, api_key = Eligible.request(method, url, api_key, params)
+      response, api_key = Eligible.request(method, url, api_key, params, headers)
       Util.convert_to_eligible_object(response, api_key)
     end
 

@@ -9,19 +9,19 @@ describe 'Eligible::Lockbox' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:lockbox_id] = 123
-      allow(Eligible).to receive(:request).with(:get, '/lockboxes/123.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Lockbox.get(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/lockboxes/123.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Lockbox.get(params, api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if lockbox id is not present' do
-      expect { Eligible::Lockbox.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Lockbox.get(params, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 
   describe '.all' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/lockboxes.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Lockbox.all(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/lockboxes.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Lockbox.all(params, api_key: api_key)).to eq 'success'
     end
   end
 

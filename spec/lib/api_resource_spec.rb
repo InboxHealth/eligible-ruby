@@ -44,12 +44,12 @@ describe 'API Resource' do
 
     it 'should not raise error if required param is present' do
       params[:reference_id] = '123'
-      allow(Eligible).to receive(:request).with(:get, url, api_key, params).and_return([response, api_key])
-      expect(Eligible::APIResource.send_request(:get, url, api_key, params, :reference_id)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, url, api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::APIResource.send_request(:get, url, api_key, params, {}, :reference_id)).to eq 'success'
     end
 
     it 'should raise error if required param is not present' do
-      expect { Eligible::APIResource.send_request(:get, url, api_key, params, :reference_id) }.to raise_error(ArgumentError)
+      expect { Eligible::APIResource.send_request(:get, url, api_key, params, {}, :reference_id) }.to raise_error(ArgumentError)
     end
   end
 end

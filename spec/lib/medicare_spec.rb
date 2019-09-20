@@ -8,15 +8,15 @@ describe 'Eligible::Medicare' do
 
   describe '.get' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/medicare/coverage.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Medicare.get(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/medicare/coverage.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Medicare.get(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.batch_post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/medicare/coverage/batch.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Medicare.batch_post(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:post, '/medicare/coverage/batch.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Medicare.batch_post(params, api_key: api_key)).to eq 'success'
     end
   end
 end

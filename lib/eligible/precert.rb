@@ -1,7 +1,7 @@
 module Eligible
   class Precert < PreauthResource
-    def self.require(params, api_key = nil)
-      send_request(:get, '/precert/require.json', api_key, params)
+    def self.require(params, opts = {})
+      send_request(:get, '/precert/require.json', opts[:api_key], params, Util.eligible_account_headers(opts))
     end
 
     def self.get_uri

@@ -1,7 +1,7 @@
 version: 2
 default_environment: &default_environment
   docker:
-    - image: circleci/ruby:2.2-jessie-browsers
+    - image: circleci/ruby:2.4-stretch-browsers
       environment:
         BUNDLE_JOBS: 3
         BUNDLE_RETRY: 3
