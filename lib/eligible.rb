@@ -28,6 +28,7 @@ require 'eligible/original_signature_pdf'
 require 'eligible/oauth_token'
 require 'eligible/received_pdf'
 require 'eligible/payer'
+require 'eligible/payer_mapping'
 require 'eligible/preauth_resource'
 require 'eligible/precert'
 require 'eligible/referral'
@@ -118,14 +119,14 @@ module Eligible
   end
 
   def self.api_key?(params)
-    Util.key?(params, :api_key) || Util.key?(params, :client_secret)
+    Util.key?(params, :api_key)
   end
 
   def self.request(method, url, api_key, params = {}, headers = {})
     session_token = Util.value(params, :session_token)
     api_key ||= @@api_key unless session_token
     test = self.test
-    api_key = Util.value(params, :api_key).presence || Util.value(params, :client_secret) if api_key?(params)
+    api_key = Util.value(params, :api_key) if api_key?(params)
     test = Util.value(params, :test) if test_key?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key || session_token
