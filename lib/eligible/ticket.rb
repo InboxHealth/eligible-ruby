@@ -18,7 +18,7 @@ module Eligible
     end
 
     def self.comments(params, opts = {})
-      send_request :post, ticket_url(params, true), params, opts.merge(required_param_name: :id)
+      send_request :post, ticket_url(params, true), params, opts.merge(required_params: [:id])
     end
 
     def self.all(params, opts = {})
@@ -26,15 +26,15 @@ module Eligible
     end
 
     def self.get(params, opts = {})
-      send_request :get, ticket_url(params), params, opts.merge(required_param_name: :id)
+      send_request :get, ticket_url(params), params, opts.merge(required_params: [:id])
     end
 
     def self.delete(params, opts = {})
-      send_request :delete, ticket_url(params), params, opts.merge(required_param_name: :id)
+      send_request :delete, ticket_url(params), params, opts.merge(required_params: [:id])
     end
 
     def self.update(params, opts = {})
-      send_request :put, ticket_url(params), params, opts.merge(required_param_name: :id)
+      send_request :put, ticket_url(params), params, opts.merge(required_params: [:id])
     end
   end
 end

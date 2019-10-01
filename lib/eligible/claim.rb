@@ -2,7 +2,7 @@ module Eligible
   class Claim < APIResource
     def self.ack(params, opts = {})
       reference_id = Util.value(params, :reference_id)
-      send_request :get, "/claims/#{reference_id}/acknowledgements.json", params, opts.merge(required_param_name: :reference_id)
+      send_request :get, "/claims/#{reference_id}/acknowledgements.json", params, opts.merge(required_params: [:reference_id])
     end
 
     def self.post(params, opts = {})

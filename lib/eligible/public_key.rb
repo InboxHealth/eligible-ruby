@@ -3,7 +3,7 @@ require 'openssl'
 module Eligible
   class PublicKey < APIResource
     def self.get(params, opts = {})
-      send_request :get, api_url('public_keys', params, :key_id), params, opts.merge(required_param_name: :key_id)
+      send_request :get, api_url('public_keys', params, :key_id), params, opts.merge(required_params: [:key_id])
     end
 
     def self.post(params, opts = {})
@@ -12,7 +12,7 @@ module Eligible
 
     def self.activate(params, opts = {})
       key_id = Util.value(params, :key_id)
-      send_request :get, "/public_keys/#{key_id}/activate.json", params, opts.merge(required_param_name: :key_id)
+      send_request :get, "/public_keys/#{key_id}/activate.json", params, opts.merge(required_params: [:key_id])
     end
 
     def self.all(params, opts = {})

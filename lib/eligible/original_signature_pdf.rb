@@ -6,7 +6,7 @@ module Eligible
     end
 
     def self.get(params, opts = {})
-      send_request :get, original_signature_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
+      send_request :get, original_signature_pdf_url(params), params, opts.merge(required_params: [:enrollment_npi_id])
     end
 
     def self.setup_file(params)
@@ -16,16 +16,16 @@ module Eligible
 
     def self.post(params, opts = {})
       setup_file(params)
-      send_request :post, original_signature_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
+      send_request :post, original_signature_pdf_url(params), params, opts.merge(required_params: [:enrollment_npi_id])
     end
 
     def self.update(params, opts = {})
       setup_file(params)
-      send_request :put, original_signature_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
+      send_request :put, original_signature_pdf_url(params), params, opts.merge(required_params: [:enrollment_npi_id])
     end
 
     def self.delete(params, opts = {})
-      send_request :delete, original_signature_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
+      send_request :delete, original_signature_pdf_url(params), params, opts.merge(required_params: [:enrollment_npi_id])
     end
 
     def self.download(params, opts = {})

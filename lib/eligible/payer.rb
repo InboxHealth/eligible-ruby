@@ -5,7 +5,7 @@ module Eligible
     end
 
     def self.get(params, opts = {})
-      send_request :get, api_url('payers', params, :payer_id), params, opts.merge(required_param_name: :payer_id)
+      send_request :get, api_url('payers', params, :payer_id), params, opts.merge(required_params: [:payer_id])
     end
 
     def self.search_options(params, opts = {})

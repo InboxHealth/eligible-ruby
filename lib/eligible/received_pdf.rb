@@ -6,7 +6,7 @@ module Eligible
     end
 
     def self.get(params, opts = {})
-      send_request :get, received_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
+      send_request :get, received_pdf_url(params), params, opts.merge(required_params: [:enrollment_npi_id])
     end
 
     def self.download(params, opts = {})
