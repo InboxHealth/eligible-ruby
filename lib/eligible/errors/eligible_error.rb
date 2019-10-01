@@ -16,7 +16,8 @@ module Eligible
 
     def to_s
       status_string = @http_status.nil? ? '' : "(Status #{@http_status}) "
-      "#{status_string}#{@message}: #{@errors.to_json}"
+      json_errors = errors.presence || (json_body&.key?(:error) ? [json_body] : [])
+      "#{status_string}#{@message}: #{json_errors.to_json}"
     end
   end
 end

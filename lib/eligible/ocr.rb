@@ -5,9 +5,9 @@ module Eligible
       params[:file] = File.new(file, 'rb') if file.is_a?(String)
     end
 
-    def self.post(params, api_key = nil)
+    def self.post(params, opts = {})
       setup_file(params)
-      send_request(:post, '/card_scans.json', api_key, params)
+      send_request :post, '/card_scans.json', params, opts
     end
 
     private_class_method :setup_file

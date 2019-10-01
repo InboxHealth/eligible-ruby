@@ -8,15 +8,15 @@ describe 'Eligible::Demographic' do
 
   describe '.get' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/demographic/all.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Demographic.get(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/demographic/all.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Demographic.get(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.batch_post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/demographic/all/batch.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Demographic.batch_post(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:post, '/demographic/all/batch.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Demographic.batch_post(params, api_key: api_key)).to eq 'success'
     end
   end
 end

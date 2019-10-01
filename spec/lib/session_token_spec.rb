@@ -17,16 +17,16 @@ describe Eligible::SessionToken do
   describe '.create' do
     it 'calls Eligible.request with proper url' do
       params[:eligible_id] = '123'
-      allow(Eligible).to receive(:request).with(:post, '/session_tokens/create.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::SessionToken.create(params, api_key)).to eq('success')
+      allow(Eligible).to receive(:request).with(:post, '/session_tokens/create.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::SessionToken.create(params, api_key: api_key)).to eq('success')
     end
   end
 
   describe '.revoke' do
     it 'calls Eligible.request with proper url' do
       params[:eligible_id] = '123'
-      allow(Eligible).to receive(:request).with(:post, '/session_tokens/revoke.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::SessionToken.revoke(params, api_key)).to eq('success')
+      allow(Eligible).to receive(:request).with(:post, '/session_tokens/revoke.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::SessionToken.revoke(params, api_key: api_key)).to eq('success')
     end
   end
 end

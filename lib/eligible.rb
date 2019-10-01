@@ -25,8 +25,10 @@ require 'eligible/ticket'
 require 'eligible/customer'
 require 'eligible/ocr'
 require 'eligible/original_signature_pdf'
+require 'eligible/oauth_token'
 require 'eligible/received_pdf'
 require 'eligible/payer'
+require 'eligible/payer_mapping'
 require 'eligible/preauth_resource'
 require 'eligible/precert'
 require 'eligible/referral'
@@ -53,9 +55,18 @@ module Eligible
   @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
   @@fingerprints = %w(9df5f186fb20ad25ffd864942a6394840b02a480
                       a1cd762a9f4be0f3b6bdd6300e52c6ce8d7d67f5)
+  @@eligible_account = nil
 
   def self.api_url(url = '')
     @@api_base + url.to_s
+  end
+
+  def self.eligible_account
+    @@eligible_account
+  end
+
+  def self.eligible_account=(eligible_account)
+    @@eligible_account = eligible_account
   end
 
   def self.api_key
@@ -163,6 +174,7 @@ module Eligible
     }.merge(headers)
 
     headers[:eligible_version] = api_version if api_version
+    headers[:eligible_account] = eligible_account if eligible_account
 
     opts = {
       method: method,

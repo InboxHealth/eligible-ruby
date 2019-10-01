@@ -9,38 +9,38 @@ describe 'Eligible::Enrollment' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:enrollment_npi_id] = 123
-      allow(Eligible).to receive(:request).with(:get, '/enrollment_npis/123.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Enrollment.get(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/enrollment_npis/123.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Enrollment.get(params, api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if enrollment npi id is not present' do
-      expect { Eligible::Enrollment.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Enrollment.get(params, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 
   describe '.post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/enrollment_npis.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Enrollment.post(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:post, '/enrollment_npis.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Enrollment.post(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.list' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/enrollment_npis.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Enrollment.list(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:get, '/enrollment_npis.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Enrollment.list(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.update' do
     it 'should call Eligible.request with proper url' do
       params[:enrollment_npi_id] = 123
-      allow(Eligible).to receive(:request).with(:put, '/enrollment_npis/123.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::Enrollment.update(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:put, '/enrollment_npis/123.json', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::Enrollment.update(params, api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if enrollment npi id is not present' do
-      expect { Eligible::Enrollment.update(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Enrollment.update(params, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 end

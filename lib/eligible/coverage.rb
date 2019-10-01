@@ -8,12 +8,12 @@ module Eligible
       return '/coverage/all/batch.json'
     end
 
-    def self.cost_estimate(params, api_key = nil)
-      send_request(:get, '/coverage/cost_estimates.json', api_key, params)
+    def self.cost_estimate(params, opts = {})
+      send_request :get, '/coverage/cost_estimates.json', params, opts
     end
 
-    def self.batch_medicare_post(params, api_key = nil)
-      send_request(:post, '/medicare/coverage/batch.json', api_key, params)
+    def self.batch_medicare_post(params, opts = {})
+      send_request :post, '/medicare/coverage/batch.json', params, opts
     end
   end
 end

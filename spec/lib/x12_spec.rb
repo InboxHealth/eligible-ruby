@@ -8,8 +8,8 @@ describe 'Eligible::X12' do
 
   describe '.post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/x12', api_key, params).and_return([response, api_key])
-      expect(Eligible::X12.post(params, api_key)).to eq 'success'
+      allow(Eligible).to receive(:request).with(:post, '/x12', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::X12.post(params, api_key: api_key)).to eq 'success'
     end
   end
 end

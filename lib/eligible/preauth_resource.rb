@@ -1,11 +1,11 @@
 module Eligible
   class PreauthResource < CoverageResource
-    def self.inquiry(params, api_key = nil)
-      get(params, api_key)
+    def self.inquiry(params, opts = {})
+      get(params, opts)
     end
 
-    def self.create(params, api_key = nil)
-      post(params, api_key)
+    def self.create(params, opts = {})
+      post(params, opts)
     end
   end
 end
