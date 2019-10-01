@@ -1,11 +1,11 @@
 module Eligible
   class CoverageResource < APIResource
     def self.get(params, opts = {})
-      send_request(:get, get_uri, opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :get, get_uri, params, opts
     end
 
     def self.post(params, opts = {})
-      send_request(:post, post_uri, opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :post, post_uri, params, opts
     end
 
     def self.get_uri

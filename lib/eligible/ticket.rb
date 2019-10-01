@@ -14,27 +14,27 @@ module Eligible
     end
 
     def self.create(params, opts = {})
-      send_request(:post, ticket_url, opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :post, ticket_url, params, opts
     end
 
     def self.comments(params, opts = {})
-      send_request(:post, ticket_url(params, true), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
+      send_request :post, ticket_url(params, true), params, opts.merge(required_param_name: :id)
     end
 
     def self.all(params, opts = {})
-      send_request(:get, ticket_url, opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :get, ticket_url, params, opts
     end
 
     def self.get(params, opts = {})
-      send_request(:get, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
+      send_request :get, ticket_url(params), params, opts.merge(required_param_name: :id)
     end
 
     def self.delete(params, opts = {})
-      send_request(:delete, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
+      send_request :delete, ticket_url(params), params, opts.merge(required_param_name: :id)
     end
 
     def self.update(params, opts = {})
-      send_request(:put, ticket_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :id)
+      send_request :put, ticket_url(params), params, opts.merge(required_param_name: :id)
     end
   end
 end

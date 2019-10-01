@@ -32,13 +32,6 @@ module Eligible
       end
     end
 
-    def self.eligible_account_headers(opts)
-      raise TypeError('Options should be passed as a hash.') unless opts.is_a?(Hash)
-      opts.delete(:api_key)
-      opts.delete('api_key')
-      opts.empty? ? {} : { eligible_account: opts[:eligible_account] || opts['eligible_account'] }
-    end
-
     # Converts a key into a symbol if it is possible, returns the key if it is not
     def self.symbolize_name(key)
       return key unless key.respond_to?(:to_sym)

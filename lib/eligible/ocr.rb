@@ -7,7 +7,7 @@ module Eligible
 
     def self.post(params, opts = {})
       setup_file(params)
-      send_request(:post, '/card_scans.json', opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :post, '/card_scans.json', params, opts
     end
 
     private_class_method :setup_file

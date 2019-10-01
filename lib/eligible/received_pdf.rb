@@ -6,14 +6,16 @@ module Eligible
     end
 
     def self.get(params, opts = {})
-      send_request(:get, received_pdf_url(params), opts[:api_key], params, Util.eligible_account_headers(opts), :enrollment_npi_id)
+      send_request :get, received_pdf_url(params), params, opts.merge(required_param_name: :enrollment_npi_id)
     end
 
     def self.download(params, opts = {})
       enrollment_npi_id = Util.value(params, :enrollment_npi_id)
       require_param(enrollment_npi_id, 'Enrollment Npi id')
       params[:format] = 'x12'
-      response = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}/received_pdf/download", opts[:api_key], params, Util.eligible_account_headers(opts))[0]
+      headers = opts.clone
+      api_key = headers.delete(:api_key)
+      response = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}/received_pdf/download", api_key, params, headers)[0]
       filename = params[:filename] || '/tmp/received_pdf.pdf'
       file = File.new(filename, 'w')
       file.write response

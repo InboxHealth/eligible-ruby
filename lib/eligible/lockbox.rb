@@ -4,11 +4,11 @@ require 'base64'
 module Eligible
   class Lockbox < APIResource
     def self.get(params, opts = {})
-      send_request(:get, api_url('lockboxes', params, :lockbox_id), opts[:api_key], params, Util.eligible_account_headers(opts), :lockbox_id)
+      send_request :get, api_url('lockboxes', params, :lockbox_id), params, opts.merge(required_param_name: :lockbox_id)
     end
 
     def self.all(params, opts = {})
-      send_request(:get, api_url('lockboxes'), opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :get, api_url('lockboxes'), params, opts
     end
 
     def self.extract_private_key(params)

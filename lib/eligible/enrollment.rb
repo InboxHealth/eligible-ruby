@@ -1,19 +1,19 @@
 module Eligible
   class Enrollment < APIResource
     def self.get(params, opts = {})
-      send_request(:get, api_url('enrollment_npis', params, :enrollment_npi_id), opts[:api_key], params, Util.eligible_account_headers(opts), :enrollment_npi_id)
+      send_request :get, api_url('enrollment_npis', params, :enrollment_npi_id), params, opts.merge(required_param_name: :enrollment_npi_id)
     end
 
     def self.list(params, opts = {})
-      send_request(:get, api_url('enrollment_npis'), opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :get, api_url('enrollment_npis'), params, opts
     end
 
     def self.post(params, opts = {})
-      send_request(:post, api_url('enrollment_npis'), opts[:api_key], params, Util.eligible_account_headers(opts))
+      send_request :post, api_url('enrollment_npis'), params, opts
     end
 
     def self.update(params, opts = {})
-      send_request(:put, api_url('enrollment_npis', params, :enrollment_npi_id), opts[:api_key], params, Util.eligible_account_headers(opts), :enrollment_npi_id)
+      send_request :put, api_url('enrollment_npis', params, :enrollment_npi_id), params, opts.merge(required_param_name: :enrollment_npi_id)
     end
 
     def enrollment_npis
