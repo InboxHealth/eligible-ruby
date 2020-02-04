@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0 - 2019-10-01
+  - Added support for Eligible-Account Header in the API requests when used Eligible Connect feature
+
 ## 2.9.9 - 2019-08-07
   - Added Icd code endpoints
 
@@ -53,7 +56,7 @@
   - Refactored the code and fixed couple of bugs
   - Documentation updates for the endpoints
 
-## 2.6.0 - 2016-02-23 
+## 2.6.0 - 2016-02-23
   - Added new endpoints customer, original signature pdf and payer.
   - Added specs
   - Bumped api version to 1.5
