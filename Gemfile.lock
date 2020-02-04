@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eligible (3.0.0)
+    eligible (3.0.0.beta1)
       multi_json (~> 1.7)
       rest-client (~> 2.0.0)
 
@@ -15,10 +15,10 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     json (2.1.0)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0904)
-    multi_json (1.13.1)
+    mime-types-data (3.2019.1009)
+    multi_json (1.14.1)
     netrc (0.11.0)
     rake (12.3.0)
     rest-client (2.0.2)
@@ -63,4 +63,4 @@ RUBY VERSION
    ruby 2.4.3p205
 
 BUNDLED WITH
-   1.16.6
+   1.17.3

@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 - 2019-10-01
+## 3.0.0.beta1 - 2019-10-01
   - Added support for Eligible-Account Header in the API requests when used Eligible Connect feature
 
 ## 2.9.9 - 2019-08-07
