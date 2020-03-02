@@ -41,6 +41,9 @@ require 'eligible/calculator_deploy_url'
 require 'eligible/risk_assessment'
 require 'eligible/icd'
 
+# New REST API Endpoints
+require 'eligible/v1_0/file_object'
+
 # Errors
 require 'eligible/errors/eligible_error'
 require 'eligible/errors/api_connection_error'
@@ -59,8 +62,13 @@ module Eligible
                       896ce24f7a83eb656c040985fdb50ce39f90b813)
   @@eligible_account = nil
 
-  def self.api_url(url = '')
-    @@api_base + url.to_s
+  def self.api_url(url = '', rest_api_version = @@api_version)
+    api_base = if rest_api_version && rest_api_version != @@api_version
+                 @@api_base.gsub(/v(\d).(\d)/, "v#{rest_api_version}")
+               else
+                 @@api_base
+               end
+    api_base + url.to_s
   end
 
   def self.eligible_account
@@ -124,12 +132,17 @@ module Eligible
     Util.key?(params, :api_key)
   end
 
+  def self.rest_api_version?(params)
+    Util.key?(params, :rest_api_version)
+  end
+
   def self.request(method, url, api_key, params = {}, headers = {})
     session_token = Util.value(params, :session_token)
     api_key ||= @@api_key unless session_token
     test = self.test
     api_key = Util.value(params, :api_key) if api_key?(params)
     test = Util.value(params, :test) if test_key?(params)
+    rest_api_version = Util.value(params, :rest_api_version) if rest_api_version?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key || session_token
 
@@ -145,7 +158,8 @@ module Eligible
 
     # GET requests, parameters on the query string
     # POST requests, parameters as json in the body
-    url = api_url(url)
+    url = api_url(url, rest_api_version)
+
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
       url += "?api_key=#{api_key}"
