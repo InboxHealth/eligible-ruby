@@ -42,8 +42,8 @@ module Eligible
       required_param_validation(params: params, required_params: headers.delete(:required_params))
 
       # Here rest_api_version is related to New REST API Endpoints
-      rest_api_version = self::REST_API_VERSION || Eligible.api_version
-      response, api_key = Eligible.request(method, url, api_key, params.merge(rest_api_version: rest_api_version), headers)
+      params = self.const_defined?(:REST_API_VERSION) ? params.merge(rest_api_version: self::REST_API_VERSION) : params
+      response, api_key = Eligible.request(method, url, api_key, params, headers)
       Util.convert_to_eligible_object(response, api_key)
     end
   end
