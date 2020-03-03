@@ -12,7 +12,7 @@ module Eligible
 
     def self.activate(params, opts = {})
       key_id = Util.value(params, :key_id)
-      send_request :get, "/public_keys/#{key_id}/activate.json", params, opts.merge(required_params: [:key_id])
+      send_request :get, "/public_keys/#{key_id}/activate", params, opts.merge(required_params: [:key_id])
     end
 
     def self.all(params, opts = {})

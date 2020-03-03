@@ -9,7 +9,7 @@ describe 'Eligible::Customer' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:customer_id] = 123
-      allow(Eligible).to receive(:request).with(:get, '/customers/123.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/customers/123', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Customer.get(params, api_key: api_key)).to eq 'success'
     end
 
@@ -20,7 +20,7 @@ describe 'Eligible::Customer' do
 
   describe '.post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/customers.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:post, '/customers', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Customer.post(params, api_key: api_key)).to eq 'success'
     end
   end
@@ -28,7 +28,7 @@ describe 'Eligible::Customer' do
   describe '.update' do
     it 'should call Eligible.request with proper url' do
       params[:customer_id] = 123
-      allow(Eligible).to receive(:request).with(:put, '/customers/123.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:put, '/customers/123', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Customer.update(params, api_key: api_key)).to eq 'success'
     end
 
@@ -39,7 +39,7 @@ describe 'Eligible::Customer' do
 
   describe '.all' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/customers.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/customers', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Customer.all(params, api_key: api_key)).to eq 'success'
     end
   end

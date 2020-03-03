@@ -9,7 +9,7 @@ describe 'Eligible::Payer' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:payer_id] = 12345
-      allow(Eligible).to receive(:request).with(:get, '/payers/12345.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/payers/12345', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Payer.get(params, api_key: api_key)).to eq 'success'
     end
 
@@ -20,7 +20,7 @@ describe 'Eligible::Payer' do
 
   describe '.list' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/payers.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/payers', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Payer.list(params, api_key: api_key)).to eq 'success'
     end
   end
