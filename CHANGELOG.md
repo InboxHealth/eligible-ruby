@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta2 - 2020-03-03
+  - Added support for V1.0 REST API endpoints and added Files endpoints
+
 ## 3.0.0.beta1 - 2019-10-01
   - Added support for Eligible-Account Header in the API requests when used Eligible Connect feature
 
