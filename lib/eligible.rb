@@ -62,12 +62,8 @@ module Eligible
                       896ce24f7a83eb656c040985fdb50ce39f90b813)
   @@eligible_account = nil
 
-  def self.api_url(url = '', rest_api_version = @@api_version)
-    api_base = if rest_api_version && rest_api_version != @@api_version
-                 @@api_base.gsub(/v(\d).(\d)/, "v#{rest_api_version}")
-               else
-                 @@api_base
-               end
+  def self.api_url(url = '', rest_api_version = nil)
+    api_base = rest_api_version ? @@api_base.gsub(/v(\d).(\d)/, "v#{rest_api_version}") : @@api_base
     api_base + url.to_s
   end
 
@@ -143,6 +139,7 @@ module Eligible
     api_key = Util.value(params, :api_key) if api_key?(params)
     test = Util.value(params, :test) if test_key?(params)
     rest_api_version = Util.value(params, :rest_api_version) if rest_api_version?(params)
+    basic_auth = true if rest_api_version?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key || session_token
 
@@ -156,41 +153,11 @@ module Eligible
       uname: uname
     }
 
-    # GET requests, parameters on the query string
-    # POST requests, parameters as json in the body
-    url = api_url(url, rest_api_version)
+    # Set request URL and Payload based on new and old endpoints version
+    url, payload = set_request_url_and_payload(method, url, params, test, rest_api_version)
 
-    case method.to_s.downcase.to_sym
-    when :get, :head, :delete
-      url += "?api_key=#{api_key}"
-      if params && params.count > 0
-        query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-        url += "&#{query_string}"
-      end
-      url += "&test=#{test}"
-      payload = nil
-    else
-      params.merge!('api_key' => api_key, 'test' => test)
-      payload = Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
-    end
-
-    begin
-      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
-    rescue => e
-      headers = {
-        x_eligible_client_raw_user_agent: debug_info.inspect,
-        error: "#{e} (#{e.class})"
-      }.merge(headers)
-    end
-
-    headers = {
-      user_agent: "eligible-ruby/#{Eligible::VERSION}",
-      authorization: "Bearer #{api_key}",
-      content_type: 'application/json'
-    }.merge(headers)
-
-    headers[:eligible_version] = api_version if api_version
-    headers[:eligible_account] = eligible_account if eligible_account
+    # Set request Headers and Authorization based on new and old endpoints version
+    headers = set_request_headers(headers, debug_info, basic_auth, api_key)
 
     opts = {
       method: method,
@@ -243,6 +210,51 @@ module Eligible
 
     resp = Util.symbolize_names(resp)
     return [ resp, api_key ]
+  end
+
+  def self.set_request_url_and_payload(method, url, params, test, rest_api_version)
+    # GET requests, parameters on the query string
+    # POST requests, parameters as json in the body
+    url = api_url(url, rest_api_version)
+
+    case method.to_s.downcase.to_sym
+    when :get, :head, :delete
+      url += "?test=#{test}"
+      if params && params.count > 0
+        query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
+        url += "&#{query_string}"
+      end
+      url += "&api_key=#{api_key}" if rest_api_version.nil?
+      payload = nil
+    else
+      params.merge!('test' => test)
+      params.merge!('api_key' => api_key) if rest_api_version.nil?
+      payload = Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
+    end
+
+    [url, payload]
+  end
+
+  def self.set_request_headers(headers, debug_info, basic_auth, api_key)
+    begin
+      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
+    rescue => e
+      headers = {
+        x_eligible_client_raw_user_agent: debug_info.inspect,
+        error: "#{e} (#{e.class})"
+      }.merge(headers)
+    end
+
+    headers = {
+      user_agent: "eligible-ruby/#{Eligible::VERSION}",
+      content_type: 'application/json'
+    }.merge(headers)
+
+    headers[:authorization] = basic_auth ? "Basic #{api_key}:" : "Bearer #{api_key}"
+
+    headers[:eligible_version] = api_version if api_version
+    headers[:eligible_account] = eligible_account if eligible_account
+    headers
   end
 
   def self.verify_certificate
