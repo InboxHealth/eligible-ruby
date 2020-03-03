@@ -250,7 +250,8 @@ module Eligible
       content_type: 'application/json'
     }.merge(headers)
 
-    headers[:authorization] = basic_auth ? "Basic #{api_key}:" : "Bearer #{api_key}"
+    basic_auth_token = Base64.strict_encode64("#{api_key}:")
+    headers[:authorization] = basic_auth ? "Basic #{basic_auth_token}" : "Bearer #{api_key}"
 
     headers[:eligible_version] = api_version if api_version
     headers[:eligible_account] = eligible_account if eligible_account

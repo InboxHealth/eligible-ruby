@@ -9,7 +9,7 @@ describe 'Eligible::FileObject' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:file_id] = 'file_123'
-      allow(Eligible).to receive(:request).with(:get, '/files/file_123.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/files/file_123', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::FileObject.get(params, api_key: api_key)).to eq 'success'
     end
 
@@ -20,14 +20,14 @@ describe 'Eligible::FileObject' do
 
   describe '.post' do
     it 'should post to Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:post, '/files.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:post, '/files', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::FileObject.post(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.list' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/files.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/files', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::FileObject.list(params, api_key: api_key)).to eq 'success'
     end
   end
