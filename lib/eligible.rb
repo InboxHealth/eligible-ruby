@@ -154,7 +154,9 @@ module Eligible
     }
 
     # Set request URL and Payload based on new and old endpoints version
-    url, payload = set_request_url_and_payload(method, url, params, test, rest_api_version)
+    url, payload = set_request_url_and_payload(
+      method, url, params, { test: test, rest_api_version: rest_api_version, api_key: api_key, basic_auth: basic_auth },
+    )
 
     # Set request Headers and Authorization based on new and old endpoints version
     headers = set_request_headers(headers, debug_info, basic_auth, api_key)
@@ -212,27 +214,36 @@ module Eligible
     return [ resp, api_key ]
   end
 
-  def self.set_request_url_and_payload(method, url, params, test, rest_api_version)
+  def self.set_request_url_and_payload(method, url, params, options)
     # GET requests, parameters on the query string
     # POST requests, parameters as json in the body
-    url = api_url(url, rest_api_version)
+    url = api_url(url, options[:rest_api_version])
 
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
-      url += "?test=#{test}"
-      if params && params.count > 0
-        query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-        url += "&#{query_string}"
-      end
-      url += "&api_key=#{api_key}" if rest_api_version.nil?
+      url = fetch_url_with_query_string(params, url, options)
       payload = nil
     else
-      params.merge!('test' => test)
-      params.merge!('api_key' => api_key) if rest_api_version.nil?
-      payload = Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
+      payload = request_payload(options, params)
     end
 
     [url, payload]
+  end
+
+  def self.fetch_url_with_query_string(params, url, options)
+    url += "?test=#{options[:test]}"
+    url += "&api_key=#{options[:api_key]}" unless options[:basic_auth]
+    return url unless params || params.count == 0
+
+    query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
+    url += "&#{query_string}"
+    url
+  end
+
+  def self.request_payload(options, params)
+    params.merge!('test' => options[:test])
+    params.merge!('api_key' => options[:api_key]) unless options[:basic_auth]
+    Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
   end
 
   def self.set_request_headers(headers, debug_info, basic_auth, api_key)
@@ -250,6 +261,7 @@ module Eligible
       content_type: 'application/json'
     }.merge(headers)
 
+    # Using Basic Auth for new REST API endpoints (v1.0)
     basic_auth_token = Base64.strict_encode64("#{api_key}:")
     headers[:authorization] = basic_auth ? "Basic #{basic_auth_token}" : "Bearer #{api_key}"
 
