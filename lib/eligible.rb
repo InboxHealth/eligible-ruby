@@ -41,6 +41,9 @@ require 'eligible/calculator_deploy_url'
 require 'eligible/risk_assessment'
 require 'eligible/icd'
 
+# New REST API Endpoints
+require 'eligible/v1_0/file_object'
+
 # Errors
 require 'eligible/errors/eligible_error'
 require 'eligible/errors/api_connection_error'
@@ -59,8 +62,9 @@ module Eligible
                       896ce24f7a83eb656c040985fdb50ce39f90b813)
   @@eligible_account = nil
 
-  def self.api_url(url = '')
-    @@api_base + url.to_s
+  def self.api_url(url = '', rest_api_version = nil)
+    api_base = rest_api_version ? @@api_base.gsub(/v(\d).(\d)/, "v#{rest_api_version}") : @@api_base
+    api_base + url.to_s
   end
 
   def self.eligible_account
@@ -124,12 +128,18 @@ module Eligible
     Util.key?(params, :api_key)
   end
 
+  def self.rest_api_version?(params)
+    Util.key?(params, :rest_api_version)
+  end
+
   def self.request(method, url, api_key, params = {}, headers = {})
     session_token = Util.value(params, :session_token)
     api_key ||= @@api_key unless session_token
     test = self.test
     api_key = Util.value(params, :api_key) if api_key?(params)
     test = Util.value(params, :test) if test_key?(params)
+    rest_api_version = Util.value(params, :rest_api_version) if rest_api_version?(params)
+    basic_auth = true if rest_api_version?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key || session_token
 
@@ -143,40 +153,13 @@ module Eligible
       uname: uname
     }
 
-    # GET requests, parameters on the query string
-    # POST requests, parameters as json in the body
-    url = api_url(url)
-    case method.to_s.downcase.to_sym
-    when :get, :head, :delete
-      url += "?api_key=#{api_key}"
-      if params && params.count > 0
-        query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-        url += "&#{query_string}"
-      end
-      url += "&test=#{test}"
-      payload = nil
-    else
-      params.merge!('api_key' => api_key, 'test' => test)
-      payload = Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
-    end
+    # Set request URL and Payload based on new and old endpoints version
+    url, payload = generate_request_url_and_payload(
+      method, url, params, { test: test, rest_api_version: rest_api_version, api_key: api_key, basic_auth: basic_auth },
+    )
 
-    begin
-      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
-    rescue => e
-      headers = {
-        x_eligible_client_raw_user_agent: debug_info.inspect,
-        error: "#{e} (#{e.class})"
-      }.merge(headers)
-    end
-
-    headers = {
-      user_agent: "eligible-ruby/#{Eligible::VERSION}",
-      authorization: "Bearer #{api_key}",
-      content_type: 'application/json'
-    }.merge(headers)
-
-    headers[:eligible_version] = api_version if api_version
-    headers[:eligible_account] = eligible_account if eligible_account
+    # Set request Headers and Authorization based on new and old endpoints version
+    headers = generate_request_headers(headers, debug_info, basic_auth, { api_key: api_key, session_token: session_token })
 
     opts = {
       method: method,
@@ -229,6 +212,68 @@ module Eligible
 
     resp = Util.symbolize_names(resp)
     return [ resp, api_key ]
+  end
+
+  def self.generate_request_url_and_payload(method, url, params, options)
+    # GET requests, parameters on the query string
+    # POST requests, parameters as json in the body
+    url = api_url(url, options[:rest_api_version])
+
+    case method.to_s.downcase.to_sym
+    when :get, :head, :delete
+      url = fetch_url_with_query_string(params, url, options)
+      payload = nil
+    else
+      payload = request_payload(options, params)
+    end
+
+    [url, payload]
+  end
+
+  def self.fetch_url_with_query_string(params, url, options)
+    url += "?test=#{options[:test]}"
+    url += "&api_key=#{options[:api_key]}" unless options[:basic_auth]
+    return url unless params || params.count == 0
+
+    query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
+    url += "&#{query_string}"
+    url
+  end
+
+  def self.request_payload(options, params)
+    params.merge!('test' => options[:test])
+    params.merge!('api_key' => options[:api_key]) unless options[:basic_auth]
+    Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
+  end
+
+  def self.generate_request_headers(headers, debug_info, basic_auth, auth_options)
+    begin
+      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
+    rescue => e
+      headers = {
+        x_eligible_client_raw_user_agent: debug_info.inspect,
+        error: "#{e} (#{e.class})"
+      }.merge(headers)
+    end
+
+    headers = {
+      user_agent: "eligible-ruby/#{Eligible::VERSION}",
+      content_type: 'application/json'
+    }.merge(headers)
+
+    headers[:authorization] = authorization_header(basic_auth, auth_options)
+    headers[:eligible_version] = api_version if api_version
+    headers[:eligible_account] = eligible_account if eligible_account
+    headers
+  end
+
+  def self.authorization_header(basic_auth, auth_options)
+    # Using Bearer scheme for Session Token Auth for new REST API endpoints (v1.0)
+    return "Bearer #{auth_options[:session_token]}" if basic_auth && auth_options[:session_token]
+
+    # Using Basic Auth for new REST API endpoints (v1.0)
+    basic_auth_token = Base64.strict_encode64("#{auth_options[:api_key]}:")
+    "Basic #{basic_auth_token}" if basic_auth
   end
 
   def self.verify_certificate

@@ -9,7 +9,7 @@ describe 'Eligible::Lockbox' do
   describe '.get' do
     it 'should call Eligible.request with proper url' do
       params[:lockbox_id] = 123
-      allow(Eligible).to receive(:request).with(:get, '/lockboxes/123.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/lockboxes/123', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Lockbox.get(params, api_key: api_key)).to eq 'success'
     end
 
@@ -20,7 +20,7 @@ describe 'Eligible::Lockbox' do
 
   describe '.all' do
     it 'should call Eligible.request with proper url' do
-      allow(Eligible).to receive(:request).with(:get, '/lockboxes.json', api_key, params, {}).and_return([response, api_key])
+      allow(Eligible).to receive(:request).with(:get, '/lockboxes', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::Lockbox.all(params, api_key: api_key)).to eq 'success'
     end
   end

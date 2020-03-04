@@ -6,10 +6,10 @@ module Eligible
 
     def self.api_url(base, params = nil, param_id = nil)
       if params.nil?
-        "/#{base}.json"
+        "/#{base}"
       else
         id = Util.value(params, param_id)
-        "/#{base}/#{id}.json"
+        "/#{base}/#{id}"
       end
     end
 
@@ -41,9 +41,10 @@ module Eligible
 
       required_param_validation(params: params, required_params: headers.delete(:required_params))
 
+      # Here rest_api_version is related to New REST API Endpoints
+      params = self.const_defined?(:REST_API_VERSION) ? params.merge(rest_api_version: self::REST_API_VERSION) : params
       response, api_key = Eligible.request(method, url, api_key, params, headers)
       Util.convert_to_eligible_object(response, api_key)
     end
-
   end
 end
