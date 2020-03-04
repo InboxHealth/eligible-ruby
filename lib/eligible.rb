@@ -154,12 +154,12 @@ module Eligible
     }
 
     # Set request URL and Payload based on new and old endpoints version
-    url, payload = set_request_url_and_payload(
+    url, payload = generate_request_url_and_payload(
       method, url, params, { test: test, rest_api_version: rest_api_version, api_key: api_key, basic_auth: basic_auth },
     )
 
     # Set request Headers and Authorization based on new and old endpoints version
-    headers = set_request_headers(headers, debug_info, basic_auth, api_key)
+    headers = generate_request_headers(headers, debug_info, basic_auth, { api_key: api_key, session_token: session_token })
 
     opts = {
       method: method,
@@ -214,7 +214,7 @@ module Eligible
     return [ resp, api_key ]
   end
 
-  def self.set_request_url_and_payload(method, url, params, options)
+  def self.generate_request_url_and_payload(method, url, params, options)
     # GET requests, parameters on the query string
     # POST requests, parameters as json in the body
     url = api_url(url, options[:rest_api_version])
@@ -246,7 +246,7 @@ module Eligible
     Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
   end
 
-  def self.set_request_headers(headers, debug_info, basic_auth, api_key)
+  def self.generate_request_headers(headers, debug_info, basic_auth, auth_options)
     begin
       headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
     rescue => e
@@ -261,13 +261,19 @@ module Eligible
       content_type: 'application/json'
     }.merge(headers)
 
-    # Using Basic Auth for new REST API endpoints (v1.0)
-    basic_auth_token = Base64.strict_encode64("#{api_key}:")
-    headers[:authorization] = basic_auth ? "Basic #{basic_auth_token}" : "Bearer #{api_key}"
-
+    headers[:authorization] = authorization_header(basic_auth, auth_options)
     headers[:eligible_version] = api_version if api_version
     headers[:eligible_account] = eligible_account if eligible_account
     headers
+  end
+
+  def self.authorization_header(basic_auth, auth_options)
+    # Using Bearer scheme for Session Token Auth for new REST API endpoints (v1.0)
+    return "Bearer #{auth_options[:session_token]}" if basic_auth && auth_options[:session_token]
+
+    # Using Basic Auth for new REST API endpoints (v1.0)
+    basic_auth_token = Base64.strict_encode64("#{auth_options[:api_key]}:")
+    "Basic #{basic_auth_token}" if basic_auth
   end
 
   def self.verify_certificate
