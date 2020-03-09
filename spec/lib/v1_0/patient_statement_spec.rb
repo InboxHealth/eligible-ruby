@@ -1,4 +1,4 @@
-describe 'Eligible::FileObject' do
+describe 'Eligible::PatientStatement' do
   let(:params) { { test: true, rest_api_version: '1.0' } }
   let(:api_key) { 'xyz' }
   let(:response) { { success: true } }

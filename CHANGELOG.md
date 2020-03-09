@@ -1,7 +1,7 @@
 # Changelog
 
 ## 3.0.0.beta3 - 2020-03-09
-  - Added support for new REST API endpoint "PatientStatement"
+  - Added support for new REST API endpoint "PatientStatement" and "PatientStatementServiceLine"
 
 ## 3.0.0.beta2 - 2020-03-03
   - Added support for V1.0 REST API endpoints and added Files endpoints
