@@ -33,6 +33,10 @@ module Eligible
       end
     end
 
+    def self.rest_api_params(id: nil, params: {})
+      id.nil? ? params : params.merge(id: id)
+    end
+
     def self.send_request(method, url, params, opts)
       headers = opts.clone
       client_secret = headers.delete(:client_secret)
