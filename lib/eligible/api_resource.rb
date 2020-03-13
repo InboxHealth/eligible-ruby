@@ -33,8 +33,8 @@ module Eligible
       end
     end
 
-    def self.rest_api_params(id: nil, params: {})
-      id.nil? ? params : params.merge(id: id)
+    def self.rest_api_params(id_or_params)
+      id_or_params.is_a?(Hash) ? id_or_params : { id: id_or_params }
     end
 
     def self.send_request(method, url, params, opts)

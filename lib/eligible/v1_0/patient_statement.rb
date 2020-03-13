@@ -6,53 +6,53 @@ module Eligible
 
     # Finalize the patient statement
     def self.finalize(id, opts = {})
-      send_request :post, "/patient_statements/#{id}/finalize", rest_api_params(id: id), opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{id}/finalize", rest_api_params(id), opts.merge(required_params: [:id])
     end
 
     # Post a payment
     def self.payment(params, opts = {})
-      send_request :post, "/patient_statements/#{statement_id(params)}/payment", params, opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{statement_id(params)}/payment", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # List all payments
     def self.payments(params, opts = {})
-      send_request :get, "/patient_statements/#{statement_id(params)}/payments", params, opts.merge(required_params: [:id])
+      send_request :get, "/patient_statements/#{statement_id(params)}/payments", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # Capture a Patient Statement
     def self.capture(params, opts = {})
-      send_request :post, "/patient_statements/#{statement_id(params)}/capture", params, opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{statement_id(params)}/capture", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # Process a Patient Statement
     def self.process(params, opts = {})
-      send_request :post, "/patient_statements/#{statement_id(params)}/process", params, opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{statement_id(params)}/process", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # Send a Patient Statement
     def self.send(id, opts = {})
-      send_request :post, "/patient_statements/#{id}/send", rest_api_params(id: id), opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{id}/send", rest_api_params(id), opts.merge(required_params: [:id])
     end
 
     # Void a Patient Statement
     def self.void(id, opts = {})
-      send_request :post, "/patient_statements/#{id}/void", rest_api_params(id: id), opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{id}/void", rest_api_params(id), opts.merge(required_params: [:id])
     end
 
     # Mark UnCollectible
     def self.mark_uncollectible(id, opts = {})
-      send_request :post, "/patient_statements/#{id}/mark_uncollectible", rest_api_params(id: id), opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{id}/mark_uncollectible", rest_api_params(id), opts.merge(required_params: [:id])
     end
 
     # Reestimate a Patient Statement
     def self.reestimate(params, opts = {})
-      send_request :post, "/patient_statements/#{statement_id(params)}/reestimate", params, opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{statement_id(params)}/reestimate", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     private
 
     def statement_id(params)
-      Util.value(params, :id)
+      Util.value(rest_api_params(params), :id)
     end
   end
 end
