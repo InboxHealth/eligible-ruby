@@ -20,6 +20,10 @@ module Eligible
       "/#{CGI.escape(class_name.downcase)}/"
     end
 
+    def self.endpoint_name
+      self.const_get('ENDPOINT_NAME')
+    end
+
     def self.require_param(value, name)
       fail ArgumentError, "#{name} of the #{class_name} is required" if value.nil? || (value.is_a?(String) && value.empty?)
     end

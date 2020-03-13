@@ -19,11 +19,5 @@ module Eligible
     def self.list(params, opts = {})
       send_request :get, api_url(endpoint_name), rest_api_params(params), opts
     end
-
-    private
-
-    def self.endpoint_name
-      self.const_get('ENDPOINT_NAME')
-    end
   end
 end
