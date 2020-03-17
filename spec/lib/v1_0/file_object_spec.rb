@@ -1,27 +1,28 @@
 describe 'Eligible::FileObject' do
-  let(:params) { { test: true, rest_api_version: '1.0' } }
+  let(:params) { { rest_api_version: '1.0' } }
   let(:api_key) { 'xyz' }
   let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
+    allow(Eligible::FileObject).to receive(:endpoint_name).and_return('files')
   end
 
-  describe '.get' do
+  describe '.retrieve' do
     it 'should call Eligible.request with proper url' do
-      params[:file_id] = 'file_123'
+      params[:id] = 'file_123'
       allow(Eligible).to receive(:request).with(:get, '/files/file_123', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::FileObject.get(params, api_key: api_key)).to eq 'success'
+      expect(Eligible::FileObject.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 
-    it 'should raise error if customer id is not present' do
-      expect { Eligible::FileObject.get(params, api_key: api_key) }.to raise_error(ArgumentError)
+    it 'should raise error if file object id is not present' do
+      expect { Eligible::FileObject.retrieve(nil, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 
-  describe '.post' do
+  describe '.create' do
     it 'should post to Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:post, '/files', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::FileObject.post(params, api_key: api_key)).to eq 'success'
+      expect(Eligible::FileObject.create(params, api_key: api_key)).to eq 'success'
     end
   end
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0.beta4 - 2020-03-16
+  - Fixed query params conversion to support Expand feature for new REST API Endpoints
+  - Changed new REST API endpoints format to support `ID` field or `params`
+
 ## 3.0.0.beta3 - 2020-03-09
   - Added support for new REST API endpoint "PatientStatement" and "PatientStatementServiceLine"
 

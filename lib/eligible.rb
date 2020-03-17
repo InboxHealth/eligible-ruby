@@ -42,6 +42,7 @@ require 'eligible/risk_assessment'
 require 'eligible/icd'
 
 # New REST API Endpoints
+require 'eligible/v1_0/rest_api_base'
 require 'eligible/v1_0/file_object'
 require 'eligible/v1_0/patient_statement'
 require 'eligible/v1_0/patient_statement_service_line'

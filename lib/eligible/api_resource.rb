@@ -20,6 +20,10 @@ module Eligible
       "/#{CGI.escape(class_name.downcase)}/"
     end
 
+    def self.endpoint_name
+      self.const_get('ENDPOINT_NAME')
+    end
+
     def self.require_param(value, name)
       fail ArgumentError, "#{name} of the #{class_name} is required" if value.nil? || (value.is_a?(String) && value.empty?)
     end
@@ -31,6 +35,10 @@ module Eligible
         required_param = Util.value(params, required_param_name)
         require_param(required_param, required_param_name)
       end
+    end
+
+    def self.rest_api_params(id_or_params)
+      id_or_params.is_a?(Hash) ? id_or_params : { id: id_or_params }
     end
 
     def self.send_request(method, url, params, opts)
