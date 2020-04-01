@@ -25,4 +25,16 @@ describe 'Eligible::InsuranceCompany' do
       expect(Eligible::InsuranceCompany.list(params, api_key: api_key)).to eq 'success'
     end
   end
+
+  describe '.create' do
+    it 'should raises an exception saying not supported action' do
+      expect { Eligible::InsuranceCompany.create(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    end
+  end
+
+  describe '.update' do
+    it 'should raises an exception saying not supported action' do
+      expect { Eligible::InsuranceCompany.update(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    end
+  end
 end
