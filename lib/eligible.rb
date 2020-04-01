@@ -44,6 +44,9 @@ require 'eligible/icd'
 # New REST API Endpoints
 require 'eligible/v1_0/rest_api_base'
 require 'eligible/v1_0/file_object'
+require 'eligible/v1_0/insurance_company'
+require 'eligible/v1_0/insurance_policy'
+require 'eligible/v1_0/patient'
 require 'eligible/v1_0/patient_statement'
 require 'eligible/v1_0/patient_statement_service_line'
 

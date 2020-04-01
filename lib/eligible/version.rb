@@ -1,3 +1,3 @@
 module Eligible
-  VERSION = '3.0.0.beta4'.freeze
+  VERSION = '3.0.0.beta5'.freeze
 end

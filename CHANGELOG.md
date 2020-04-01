@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta5 - 2020-03-31
+  - Added support for new REST API endpoints "Insurance Company, Insurance Policy, Patient"
+
 ## 3.0.0.beta4 - 2020-03-16
   - Fixed query params conversion to support Expand feature for new REST API Endpoints
   - Changed new REST API endpoints format to support `ID` field or `params`

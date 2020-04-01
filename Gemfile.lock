@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eligible (3.0.0.beta4)
+    eligible (3.0.0.beta5)
       multi_json (~> 1.7)
       rest-client (~> 2.0.0)
 
@@ -47,7 +47,7 @@ GEM
     simplecov-html (0.10.2)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.6)
+    unf_ext (0.0.7.7)
 
 PLATFORMS
   ruby
