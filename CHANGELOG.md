@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta6 - 2020-04-08
+  - Added support for new REST API endpoints "PatientAccount"
+
 ## 3.0.0.beta5 - 2020-03-31
   - Added support for new REST API endpoints "Insurance Company, Insurance Policy, Patient"
 

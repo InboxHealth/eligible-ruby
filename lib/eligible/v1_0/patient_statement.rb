@@ -51,7 +51,7 @@ module Eligible
 
     private
 
-    def statement_id(id_or_params)
+    def self.statement_id(id_or_params)
       id_or_params.is_a?(Hash) ? Util.value(id_or_params, :id) : id_or_params
     end
   end
