@@ -49,9 +49,7 @@ module Eligible
       send_request :post, "/patient_statements/#{statement_id(params)}/reestimate", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
-    private
-
-    def statement_id(id_or_params)
+    def self.statement_id(id_or_params)
       id_or_params.is_a?(Hash) ? Util.value(id_or_params, :id) : id_or_params
     end
   end
