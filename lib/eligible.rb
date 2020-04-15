@@ -237,8 +237,7 @@ module Eligible
   end
 
   def self.fetch_url_with_query_string(params, url, options)
-    url += "?test=#{options[:test]}"
-    url += "&api_key=#{options[:api_key]}" unless options[:basic_auth]
+    url += "?test=#{options[:test]}&api_key=#{options[:api_key]}" unless options[:basic_auth]
     return url unless params || params.count == 0
 
     query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
