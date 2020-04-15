@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta7 - 2020-04-16
+  - Removed un-wanted parameters from the API request while making calls to new REST API endpoint
+
 ## 3.0.0.beta6 - 2020-04-08
   - Bug fix for "PatientStatement" endpoint
 

@@ -224,7 +224,8 @@ module Eligible
     # GET requests, parameters on the query string
     # POST requests, parameters as json in the body
     url = api_url(url, options[:rest_api_version])
-
+    # Used rest_api_version param only to identify new REST API version, and is not required to make calls for new REST api endpoints
+    params.delete(:rest_api_version)
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
       url = fetch_url_with_query_string(params, url, options)
@@ -237,20 +238,24 @@ module Eligible
   end
 
   def self.fetch_url_with_query_string(params, url, options)
-    url += "?test=#{options[:test]}&api_key=#{options[:api_key]}" unless options[:basic_auth]
+    url += options_query_string(options)
     return url unless params || params.count == 0
 
-    # Used rest_api_version param only to identify new REST API version, and is not required to make calls for new REST api endpoints
-    params.delete(:rest_api_version)
-    query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-    options[:basic_auth] ? url += "?#{query_string}" : url += "&#{query_string}"
+    query_string = params_query_string(params)
+    url += options[:basic_auth] ? "?#{query_string}" : "&#{query_string}"
     url
+  end
+
+  def self.options_query_string(options)
+    options[:basic_auth] ? '' : "?test=#{options[:test]}&api_key=#{options[:api_key]}"
+  end
+
+  def self.params_query_string(params)
+    Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
   end
 
   def self.request_payload(options, params)
     params.merge!('test' => options[:test], 'api_key' => options[:api_key]) unless options[:basic_auth]
-    # Used rest_api_version param only to identify new REST API version, and is not required to make calls for new REST api endpoints
-    params.delete(:rest_api_version)
     Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
   end
 

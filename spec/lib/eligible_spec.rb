@@ -79,6 +79,50 @@ describe Eligible do
     end
   end
 
+  context '.fetch_url_with_query_string' do
+    let(:params) { { key1: 'test' } }
+    let(:api_key) { 'xyz' }
+    let(:response) { { success: true } }
+    let(:url) { '/test/url' }
+    let(:options) { { test: false, api_key: api_key, basic_auth: true } }
+
+    it "should return a url with query string without having test and api_key when basic_auth is true" do
+      expect(Eligible.fetch_url_with_query_string(params, url, options)).to eq "/test/url?key1=test"
+    end
+
+    it "should return a url with query string with having test and api_key when basic_auth is false" do
+      expect(Eligible.fetch_url_with_query_string(params, url, options.merge(basic_auth: false))).to eq "/test/url?test=false&api_key=xyz&key1=test"
+    end
+  end
+
+  context '.generate_request_url_and_payload' do
+    let(:params) { { key1: 'test', rest_api_version: '1.0' } }
+    let(:api_key) { 'xyz' }
+    let(:response) { { success: true } }
+    let(:url) { '/test/url' }
+    let(:options) { { test: false, api_key: api_key, basic_auth: true, rest_api_version: '1.0' } }
+
+    context "when basic_auth is used" do
+      it "should ignore test, rest_api_version and api_key params while generating a url and request payload when basic_auth is true" do
+        expect(Eligible.generate_request_url_and_payload("GET", url, params, options)).to match_array ["https://gds.eligibleapi.com/v1.0/test/url?key1=test", nil]
+      end
+
+      it "should ignore test, rest_api_version and api_key params while generating a url and request payload for POST request" do
+        expect(Eligible.generate_request_url_and_payload("POST", url, params, options)).to match_array ["https://gds.eligibleapi.com/v1.0/test/url", {"key1":"test"}.to_json]
+      end
+    end
+
+    context "when basic_auth is not used" do
+      it "should accept test and api_key params while generating a url and request payload" do
+        expect(Eligible.generate_request_url_and_payload("GET", url, params, options.merge(basic_auth: false))).to match_array ["https://gds.eligibleapi.com/v1.0/test/url?test=false&api_key=xyz&key1=test", nil]
+      end
+
+      it "should accept test and api_key params while generating a url and request payload for POST request" do
+        expect(Eligible.generate_request_url_and_payload("POST", url, params, options.merge(basic_auth: false))).to match_array ["https://gds.eligibleapi.com/v1.0/test/url", {"key1":"test","test":false,"api_key":"xyz"}.to_json]
+      end
+    end
+  end
+
   context "error handling" do
     let(:error_response_single) {
       double("response", body: %q(
