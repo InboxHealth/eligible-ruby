@@ -241,7 +241,7 @@ module Eligible
     return url unless params || params.count == 0
 
     query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-    url += "&#{query_string}"
+    options[:basic_auth] ? url += "?#{query_string}" : url += "&#{query_string}"
     url
   end
 
