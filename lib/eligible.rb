@@ -240,14 +240,17 @@ module Eligible
     url += "?test=#{options[:test]}&api_key=#{options[:api_key]}" unless options[:basic_auth]
     return url unless params || params.count == 0
 
+    # Used rest_api_version param only to identify new REST API version, and is not required to make calls for new REST api endpoints
+    params.delete(:rest_api_version)
     query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
     options[:basic_auth] ? url += "?#{query_string}" : url += "&#{query_string}"
     url
   end
 
   def self.request_payload(options, params)
-    params.merge!('test' => options[:test])
-    params.merge!('api_key' => options[:api_key]) unless options[:basic_auth]
+    params.merge!('test' => options[:test], 'api_key' => options[:api_key]) unless options[:basic_auth]
+    # Used rest_api_version param only to identify new REST API version, and is not required to make calls for new REST api endpoints
+    params.delete(:rest_api_version)
     Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
   end
 
