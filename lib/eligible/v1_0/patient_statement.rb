@@ -11,12 +11,12 @@ module Eligible
 
     # Post a payment
     def self.payment(params, opts = {})
-      send_request :post, "/patient_statements/#{statement_id(params)}/payment", rest_api_params(params), opts.merge(required_params: [:id])
+      send_request :post, "/patient_statements/#{statement_id(params)}/payment_reports", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # List all payments
-    def self.payments(params, opts = {})
-      send_request :get, "/patient_statements/#{statement_id(params)}/payments", rest_api_params(params), opts.merge(required_params: [:id])
+    def self.payment_reports(params, opts = {})
+      send_request :get, "/patient_statements/#{statement_id(params)}/payment_reports", rest_api_params(params), opts.merge(required_params: [:id])
     end
 
     # Capture a Patient Statement
