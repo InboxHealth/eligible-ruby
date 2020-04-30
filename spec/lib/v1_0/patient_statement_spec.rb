@@ -65,27 +65,27 @@ describe 'Eligible::PatientStatement' do
       end
     end
 
-    context '.payment' do
+    context '.pay' do
       it 'should call Eligible.request with proper url' do
         params[:id] = 'pst_9bcb7c733e0242439575a299'
         allow(Eligible).to receive(:request).with(:post, '/patient_statements/pst_9bcb7c733e0242439575a299/payment_reports', api_key, params, {}).and_return([response, api_key])
-        expect(Eligible::PatientStatement.payment(params, api_key: api_key)).to eq 'success'
+        expect(Eligible::PatientStatement.pay(params, api_key: api_key)).to eq 'success'
       end
 
       it 'should raise error if patient_statement id is not present' do
-        expect { Eligible::PatientStatement.payment(params, api_key: api_key) }.to raise_error(ArgumentError)
+        expect { Eligible::PatientStatement.pay(params, api_key: api_key) }.to raise_error(ArgumentError)
       end
     end
 
-    context '.payment_reports' do
+    context '.payments' do
       it 'should call Eligible.request with proper url' do
         params[:id] = 'pst_9bcb7c733e0242439575a299'
         allow(Eligible).to receive(:request).with(:get, '/patient_statements/pst_9bcb7c733e0242439575a299/payment_reports', api_key, params, {}).and_return([response, api_key])
-        expect(Eligible::PatientStatement.payment_reports(params, api_key: api_key)).to eq 'success'
+        expect(Eligible::PatientStatement.payments(params, api_key: api_key)).to eq 'success'
       end
 
       it 'should raise error if patient_statement id is not present' do
-        expect { Eligible::PatientStatement.payment_reports(params, api_key: api_key) }.to raise_error(ArgumentError)
+        expect { Eligible::PatientStatement.payments(params, api_key: api_key) }.to raise_error(ArgumentError)
       end
     end
 
