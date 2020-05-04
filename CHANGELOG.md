@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta9 - 2020-05-04
+  - Added support for new REST API endpoints "Charge, Estimate, EstimateServiceLine, Product, Treatment"
+
 ## 3.0.0.beta8 - 2020-04-30
   - Fixed payment and payment_reports API urls for new PatientStatement endpoint
 
