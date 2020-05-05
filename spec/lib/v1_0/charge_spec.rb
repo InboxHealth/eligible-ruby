@@ -1,35 +1,35 @@
-describe 'Eligible::Charge' do
+describe 'Eligible::V1_0::Charge' do
   let(:params) { { rest_api_version: '1.0' } }
   let(:api_key) { 'xyz' }
   let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
-    allow(Eligible::Charge).to receive(:endpoint_name).and_return('charges')
+    allow(Eligible::V1_0::Charge).to receive(:endpoint_name).and_return('charges')
   end
 
   describe '.retrieve' do
     it 'should call Eligible.request with proper url' do
       params[:id] = 'est_9bcb7c733e0242439575a299'
       allow(Eligible).to receive(:request).with(:get, '/charges/est_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::Charge.retrieve(params[:id], api_key: api_key)).to eq 'success'
+      expect(Eligible::V1_0::Charge.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if charge id is not present' do
-      expect { Eligible::Charge.retrieve(nil, api_key: api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::V1_0::Charge.retrieve(nil, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 
   describe '.create' do
     it 'should post to Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:post, '/charges', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::Charge.create(params, api_key: api_key)).to eq 'success'
+      expect(Eligible::V1_0::Charge.create(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.list' do
     it 'should call Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:get, '/charges', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::Charge.list(params, api_key: api_key)).to eq 'success'
+      expect(Eligible::V1_0::Charge.list(params, api_key: api_key)).to eq 'success'
     end
   end
 
@@ -37,11 +37,11 @@ describe 'Eligible::Charge' do
     it 'should call Eligible.request with proper url' do
       params[:id] = 'est_9bcb7c733e0242439575a299'
       allow(Eligible).to receive(:request).with(:put, '/charges/est_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::Charge.update(params, api_key: api_key)).to eq 'success'
+      expect(Eligible::V1_0::Charge.update(params, api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if charge id is not present' do
-      expect { Eligible::Charge.update(params, api_key: api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::V1_0::Charge.update(params, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 end

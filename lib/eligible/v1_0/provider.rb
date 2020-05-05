@@ -2,8 +2,8 @@
 
 module Eligible
   module V1_0
-    class Patient < RestAPIBase
-      ENDPOINT_NAME = 'patients'.freeze
+    class Provider < RestAPIBase
+      ENDPOINT_NAME = 'providers'.freeze
     end
   end
 end
