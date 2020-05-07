@@ -1,7 +1,7 @@
 # Changelog
 
 ## 3.0.0.beta10 - 2020-05-06
-  - Added support for new REST API endpoints "Enrollment, Provider"
+  - Added support for new REST API endpoints "Contract, Enrollment, Provider"
   - Added support delete operations on new API.
 
 ## 3.0.0.beta9 - 2020-05-04
