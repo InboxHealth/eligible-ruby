@@ -44,6 +44,8 @@ require 'eligible/icd'
 # New REST API Endpoints
 require 'eligible/v1_0/rest_api_base'
 require 'eligible/v1_0/charge'
+require 'eligible/v1_0/contract'
+require 'eligible/v1_0/enrollment'
 require 'eligible/v1_0/estimate'
 require 'eligible/v1_0/estimate_service_line'
 require 'eligible/v1_0/file_object'
@@ -53,6 +55,7 @@ require 'eligible/v1_0/patient'
 require 'eligible/v1_0/patient_statement'
 require 'eligible/v1_0/patient_statement_service_line'
 require 'eligible/v1_0/product'
+require 'eligible/v1_0/provider'
 require 'eligible/v1_0/treatment'
 
 # Errors
@@ -72,6 +75,7 @@ module Eligible
                       d93b7697100fe978ae0f78fbf2a2443cc1958ca3
                       896ce24f7a83eb656c040985fdb50ce39f90b813)
   @@eligible_account = nil
+  @@eligible_account_id = nil
 
   def self.api_url(url = '', rest_api_version = nil)
     api_base = rest_api_version ? @@api_base.gsub(/v(\d).(\d)/, "v#{rest_api_version}") : @@api_base
@@ -82,8 +86,16 @@ module Eligible
     @@eligible_account
   end
 
+  def self.eligible_account_id
+    @@eligible_account_id
+  end
+
   def self.eligible_account=(eligible_account)
     @@eligible_account = eligible_account
+  end
+
+  def self.eligible_account_id=(eligible_account_id)
+    @@eligible_account_id = eligible_account_id
   end
 
   def self.api_key
@@ -282,6 +294,7 @@ module Eligible
     headers[:authorization] = authorization_header(basic_auth, auth_options)
     headers[:eligible_version] = api_version if api_version
     headers[:eligible_account] = eligible_account if eligible_account
+    headers[:eligible_account_id] = eligible_account_id if eligible_account_id
     headers
   end
 
