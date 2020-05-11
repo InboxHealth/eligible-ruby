@@ -32,16 +32,4 @@ describe 'Eligible::V1_0::Estimate' do
       expect(Eligible::V1_0::Estimate.list(params, api_key: api_key)).to eq 'success'
     end
   end
-
-  describe '.update' do
-    it 'should call Eligible.request with proper url' do
-      params[:id] = 'est_9bcb7c733e0242439575a299'
-      allow(Eligible).to receive(:request).with(:put, '/estimates/est_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::V1_0::Estimate.update(params, api_key: api_key)).to eq 'success'
-    end
-
-    it 'should raise error if estimate id is not present' do
-      expect { Eligible::V1_0::Estimate.update(params, api_key: api_key) }.to raise_error(ArgumentError)
-    end
-  end
 end
