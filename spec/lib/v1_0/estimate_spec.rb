@@ -4,7 +4,6 @@ describe 'Eligible::V1_0::Estimate' do
   let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
-    allow(Eligible::V1_0::Estimate).to receive(:endpoint_name).and_return('estimates')
   end
 
   describe '.retrieve' do

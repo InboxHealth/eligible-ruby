@@ -11,7 +11,6 @@ describe 'Eligible::V1_0::Contract' do
     it 'should call Eligible.request with proper url' do
       params[:id] = 'con_9bcb7c733e0242439575a299'
       allow(Eligible).to receive(:request).with(:get, '/contracts/con_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::V1_0::Contract.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 
     it 'should raise error if charge id is not present' do
@@ -42,6 +41,14 @@ describe 'Eligible::V1_0::Contract' do
 
     it 'should raise error if charge id is not present' do
       expect { Eligible::V1_0::Contract.update(params, api_key: api_key) }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe '.delete' do
+    it 'should call Eligible.request with proper url' do
+      params[:id] = 'con_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:delete, '/contracts/con_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::V1_0::Contract.delete(params, api_key: api_key)).to eq 'success'
     end
   end
 
