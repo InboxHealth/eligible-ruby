@@ -80,5 +80,11 @@ describe 'Eligible::V1_0::Claim' do
         expect { Eligible::V1_0::Claim.cancel(nil, api_key: api_key) }.to raise_error(ArgumentError)
       end
     end
+
+    describe '.delete' do
+      it 'should raises an exception saying not supported action' do
+        expect { Eligible::V1_0::Claim.delete(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+      end
+    end
   end
 end

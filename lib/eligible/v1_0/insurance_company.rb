@@ -12,6 +12,10 @@ module Eligible
       def self.update(_params, _opts = {})
         fail NotImplementedError, "Not an allowed operation for this endpoint"
       end
+
+      def self.delete(_params, _opts = {})
+        fail NotImplementedError, "Not an allowed operation for this endpoint"
+      end
     end
   end
 end

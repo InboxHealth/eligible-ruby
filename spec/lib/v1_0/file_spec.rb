@@ -31,4 +31,16 @@ describe 'Eligible::V1_0::File' do
       expect(Eligible::V1_0::File.list(params, api_key: api_key)).to eq 'success'
     end
   end
+
+  describe '.update' do
+    it 'should raises an exception saying not supported action' do
+      expect { Eligible::V1_0::File.update(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    end
+  end
+
+  describe '.delete' do
+    it 'should raises an exception saying not supported action' do
+      expect { Eligible::V1_0::File.delete(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    end
+  end
 end
