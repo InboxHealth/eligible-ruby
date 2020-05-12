@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.0.0.beta11 - 2020-05-12
+  - Added summary and escalate actions for Enrollments endpoint
+  - Added Action endpoint
+  - Added Attribute endpoint
+  - Added Claim endpoint
+  - Added ClaimServiceLine endpoint
+  - Added Device endpoint
+  - Added Discount endpoint
+  - Renamed FileObject to File in order to kept consistency
+  - Added FileLink endpoint
+  - Added InsuranceCompanyAlias endpoint
+  - Added PaymentReport endpoint
+  - Added Remark endpoint
+  - Added Rule endpoint
+  - Added Session endpoint
+  - Added Transaction endpoint
+  - Added ValueList endpoint
+  - Added ValueListItem endpoint
+  - Added Verification endpoint
+  - Updated Charge endpoint to raise exception on delete action
+  - Updated Estimate endpoint, raise exception on update and delete actions, and added missing actions process, reestimate, convert
+  - Update EstimateServiceLine endpoint to raise exception on update and delete actions
+  - Updated InsuranceCompany endpoint to raise exception on delete action
+
 ## 3.0.0.beta10 - 2020-05-06
   - Added support for new REST API endpoints "Contract, Enrollment, Provider"
   - Added support delete operations on new API.

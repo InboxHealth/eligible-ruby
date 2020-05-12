@@ -24,6 +24,12 @@ module Eligible
       def self.delete(id, opts = {})
         send_request :delete, api_url(endpoint_name, rest_api_params(id), :id), rest_api_params(id), opts.merge(required_params: [:id])
       end
+
+      private
+
+      def self.object_id(id_or_params)
+        id_or_params.is_a?(Hash) ? Util.value(id_or_params, :id) : id_or_params
+      end
     end
   end
 end

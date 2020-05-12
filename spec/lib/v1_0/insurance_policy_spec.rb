@@ -4,7 +4,6 @@ describe 'Eligible::V1_0::InsurancePolicy' do
   let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
-    allow(Eligible::V1_0::InsurancePolicy).to receive(:endpoint_name).and_return('insurance_policies')
   end
 
   describe '.retrieve' do

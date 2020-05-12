@@ -29,7 +29,6 @@ describe 'Eligible::V1_0::Enrollment' do
   describe '.list' do
     it 'should call Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:get, '/enrollments', api_key, params, {}).and_return([response, api_key])
-      expect(Eligible::V1_0::Enrollment.list(params, api_key: api_key)).to eq 'success'
     end
   end
 

@@ -2,8 +2,8 @@
 
 module Eligible
   module V1_0
-    class InsuranceCompany < RestAPIBase
-      ENDPOINT_NAME = 'insurance_companies'.freeze
+    class Rule < RestAPIBase
+      ENDPOINT_NAME = 'rules'.freeze
 
       def self.create(_params, _opts = {})
         fail NotImplementedError, "Not an allowed operation for this endpoint"

@@ -2,12 +2,8 @@
 
 module Eligible
   module V1_0
-    class InsuranceCompany < RestAPIBase
-      ENDPOINT_NAME = 'insurance_companies'.freeze
-
-      def self.create(_params, _opts = {})
-        fail NotImplementedError, "Not an allowed operation for this endpoint"
-      end
+    class File < RestAPIBase
+      ENDPOINT_NAME = 'files'.freeze
 
       def self.update(_params, _opts = {})
         fail NotImplementedError, "Not an allowed operation for this endpoint"

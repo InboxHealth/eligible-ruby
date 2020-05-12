@@ -4,7 +4,6 @@ describe 'Eligible::V1_0::InsuranceCompany' do
   let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
-    allow(Eligible::V1_0::InsuranceCompany).to receive(:endpoint_name).and_return('insurance_companies')
   end
 
   describe '.retrieve' do
@@ -35,6 +34,12 @@ describe 'Eligible::V1_0::InsuranceCompany' do
   describe '.update' do
     it 'should raises an exception saying not supported action' do
       expect { Eligible::V1_0::InsuranceCompany.update(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    end
+  end
+
+  describe '.delete' do
+    it 'should raises an exception saying not supported action' do
+      expect { Eligible::V1_0::InsuranceCompany.delete(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
     end
   end
 end
