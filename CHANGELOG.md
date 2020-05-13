@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta12 - 2020-05-12
+  - Updated pinned GDS SSL certificate
+
 ## 3.0.0.beta11 - 2020-05-12
   - Added summary and escalate actions for Enrollments endpoint
   - Added Action endpoint
