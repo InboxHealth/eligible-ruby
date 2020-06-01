@@ -26,20 +26,36 @@ describe 'Eligible::V1_0::Rule' do
   end
 
   describe '.create' do
-    it 'should raises an exception saying not supported action' do
-      expect { Eligible::V1_0::PaymentReport.create(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    it 'should send creation request' do
+      allow(Eligible).to receive(:request).with(:post, '/rules', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::V1_0::Rule.create(params, api_key: api_key)).to eq 'success'
     end
   end
 
   describe '.update' do
-    it 'should raises an exception saying not supported action' do
-      expect { Eligible::V1_0::PaymentReport.update(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    it 'should send updation request' do
+      params[:id] = 'rule_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:put, '/rules/rule_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::V1_0::Rule.update(params, api_key: api_key)).to eq 'success'
+    end
+
+    it 'should raise error if charge id is not present' do
+      expect { Eligible::V1_0::Rule.update(params, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
 
   describe '.delete' do
-    it 'should raises an exception saying not supported action' do
-      expect { Eligible::V1_0::PaymentReport.delete(params, api_key: api_key) }.to raise_error("Not an allowed operation for this endpoint")
+    it 'should send deletion request' do
+      params[:id] = 'rule_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:delete, '/rules/rule_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::V1_0::Rule.delete(params, api_key: api_key)).to eq 'success'
+    end
+  end
+
+  describe '.validate' do
+    it 'should send validation request' do
+      allow(Eligible).to receive(:request).with(:post, '/rules/validate', api_key, params, {}).and_return([response, api_key])
+      expect(Eligible::V1_0::Rule.validate(params, api_key: api_key)).to eq 'success'
     end
   end
 end
