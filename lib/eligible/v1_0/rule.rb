@@ -5,16 +5,8 @@ module Eligible
     class Rule < RestAPIBase
       ENDPOINT_NAME = 'rules'.freeze
 
-      def self.create(_params, _opts = {})
-        fail NotImplementedError, "Not an allowed operation for this endpoint"
-      end
-
-      def self.update(_params, _opts = {})
-        fail NotImplementedError, "Not an allowed operation for this endpoint"
-      end
-
-      def self.delete(_params, _opts = {})
-        fail NotImplementedError, "Not an allowed operation for this endpoint"
+      def self.validate(params, opts = {})
+        send_request :post, "/#{endpoint_name}/validate", rest_api_params(params), opts
       end
     end
   end
