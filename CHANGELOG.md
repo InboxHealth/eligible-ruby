@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta13 - 2020-06-05
+  - Added create, update, delete and validate endpoints support for rules
+
 ## 3.0.0.beta12 - 2020-05-12
   - Updated pinned GDS SSL certificate
 
