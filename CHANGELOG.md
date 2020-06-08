@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta14 - 2020-06-08
+  - Added Fee and FeeRefund new REST API endpoints
+
 ## 3.0.0.beta13 - 2020-06-05
   - Added create, update, delete and validate endpoints support for rules
 
