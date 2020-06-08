@@ -26,15 +26,12 @@ module Eligible
       end
     end
 
-    private
-
     def self.fee_refund_id(params)
       Util.value(rest_api_params(params), :id)
     end
 
     def self.fee_url(params)
       fee_id = Util.value(rest_api_params(params), :fee)
-      # fail ArgumentError, "Fee object is required for fee refunds" if fee_id.nil?
       "/fees/#{fee_id}"
     end
   end
