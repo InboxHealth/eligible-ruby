@@ -25,14 +25,5 @@ module Eligible
         fail NotImplementedError, "Not an allowed operation for this endpoint"
       end
     end
-
-    def self.fee_refund_id(params)
-      Util.value(rest_api_params(params), :id)
-    end
-
-    def self.fee_url(params)
-      fee_id = Util.value(rest_api_params(params), :fee)
-      "/fees/#{fee_id}"
-    end
   end
 end

@@ -30,6 +30,15 @@ module Eligible
       def self.object_id(id_or_params)
         id_or_params.is_a?(Hash) ? Util.value(id_or_params, :id) : id_or_params
       end
+
+      def self.fee_refund_id(params)
+        Util.value(rest_api_params(params), :id)
+      end
+
+      def self.fee_url(params)
+        fee_id = Util.value(rest_api_params(params), :fee)
+        "/fees/#{fee_id}"
+      end
     end
   end
 end
