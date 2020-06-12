@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta14 - 2020-06-12
+  - Added support for patient questionnaire, patient questions API endpoints
+
 ## 3.0.0.beta14 - 2020-06-08
   - Added Fee and FeeRefund new REST API endpoints
 
