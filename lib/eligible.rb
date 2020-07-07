@@ -77,6 +77,7 @@ require 'eligible/v1_0/treatment'
 require 'eligible/v1_0/value_list'
 require 'eligible/v1_0/value_list_item'
 require 'eligible/v1_0/verification'
+require 'eligible/v1_0/reports/accuracy_stats'
 
 # Errors
 require 'eligible/errors/eligible_error'
