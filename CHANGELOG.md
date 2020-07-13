@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta17 - 2020-07-13
+  - Added support for report API endpoints
+
 ## 3.0.0.beta16 - 2020-07-10
   - Migrated "Patient" endpoint to "PatientRecord" 
 
