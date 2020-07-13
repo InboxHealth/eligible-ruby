@@ -1,6 +1,9 @@
 # Changelog
 
-## 3.0.0.beta14 - 2020-06-12
+## 3.0.0.beta16 - 2020-07-10
+  - Migrated "Patient" endpoint to "PatientRecord" 
+
+## 3.0.0.beta15 - 2020-06-12
   - Added support for patient questionnaire, patient questions API endpoints
 
 ## 3.0.0.beta14 - 2020-06-08
