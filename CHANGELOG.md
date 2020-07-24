@@ -1,10 +1,13 @@
 # Changelog
 
+## 3.0.0.beta18 - 2020-07-24
+  - Added claim_submit endpoint API url for PatientStatement endpoint
+
 ## 3.0.0.beta17 - 2020-07-13
   - Added support for report API endpoints
 
 ## 3.0.0.beta16 - 2020-07-10
-  - Migrated "Patient" endpoint to "PatientRecord" 
+  - Migrated "Patient" endpoint to "PatientRecord"
 
 ## 3.0.0.beta15 - 2020-06-12
   - Added support for patient questionnaire, patient questions API endpoints

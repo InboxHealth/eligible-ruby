@@ -49,6 +49,11 @@ module Eligible
       def self.reestimate(params, opts = {})
         send_request :post, "/#{endpoint_name}/#{object_id(params)}/reestimate", rest_api_params(params), opts.merge(required_params: [:id])
       end
+
+      # Submit a claim for a patient statement
+      def self.submit_claim(params, opts = {})
+        send_request :post, "/#{endpoint_name}/#{object_id(params)}/submit_claim", rest_api_params(params), opts.merge(required_params: [:id])
+      end
     end
   end
 end

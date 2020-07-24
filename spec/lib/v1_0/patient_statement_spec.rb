@@ -152,5 +152,32 @@ describe 'Eligible::V1_0::PatientStatement' do
         expect { Eligible::V1_0::PatientStatement.reestimate(params, api_key: api_key) }.to raise_error(ArgumentError)
       end
     end
+
+    context '.submit_claim' do
+      it 'should call Eligible.request with proper url' do
+        params[:id] = 'pst_9bcb7c733e0242439575a299'
+        params.merge!({
+            "network": "out",
+            "diagnosis_codes": [
+                "F01.50"
+            ],
+            "diagnosis_code_pointers": [
+                "1"
+            ],
+            "units": "1",
+            "dates": {
+               "service_date_from": "2018-08-23",
+               "service_date_to": "2018-08-23"
+            },
+            "place_of_service": "11"
+        })
+        allow(Eligible).to receive(:request).with(:post, '/patient_statements/pst_9bcb7c733e0242439575a299/submit_claim', api_key, params, {}).and_return([response, api_key])
+        expect(Eligible::V1_0::PatientStatement.submit_claim(params, api_key: api_key)).to eq 'success'
+      end
+
+      it 'should raise error if patient_statement id is not present' do
+        expect { Eligible::V1_0::PatientStatement.submit_claim(params, api_key: api_key) }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
