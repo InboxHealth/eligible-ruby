@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0.beta18 - 2020-07-28
+## 3.0.0.beta19 - 2020-07-28
   - Added refunds and balance_captures REST API endpoints
 
 ## 3.0.0.beta18 - 2020-07-24
