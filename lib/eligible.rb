@@ -80,7 +80,13 @@ require 'eligible/v1_0/value_list'
 require 'eligible/v1_0/value_list_item'
 require 'eligible/v1_0/verification'
 require 'eligible/v1_0/reports/accuracy_stats'
+require 'eligible/v1_0/reports/collections'
+require 'eligible/v1_0/reports/denial_counts'
+require 'eligible/v1_0/reports/denial_reports'
+require 'eligible/v1_0/reports/discounts'
+require 'eligible/v1_0/reports/distribution_ratios'
 require 'eligible/v1_0/reports/estimate_friction'
+require 'eligible/v1_0/reports/financial_measures'
 require 'eligible/v1_0/reports/in_scope_distribution'
 
 # Errors
