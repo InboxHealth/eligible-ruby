@@ -8,8 +8,8 @@ describe 'Eligible::V1_0::Reports::FinancialMeasures' do
 
   describe '.retrieve' do
     it 'should call Eligible.request with proper url' do
-      params[:id] = 'rfinm_9bcb7c733e0242439575a299'
-      allow(Eligible).to receive(:request).with(:get, '/reports/financial_measures/rfinm_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      params[:id] = 'exec_fin_mea_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:get, '/reports/financial_measures/exec_fin_mea_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::V1_0::Reports::FinancialMeasures.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 

@@ -8,8 +8,8 @@ describe 'Eligible::V1_0::Reports::DistributionRatios' do
 
   describe '.retrieve' do
     it 'should call Eligible.request with proper url' do
-      params[:id] = 'rdisr_9bcb7c733e0242439575a299'
-      allow(Eligible).to receive(:request).with(:get, '/reports/distribution_ratios/rdisr_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      params[:id] = 'exec_dist_ratio_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:get, '/reports/distribution_ratios/exec_dist_ratio_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::V1_0::Reports::DistributionRatios.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 

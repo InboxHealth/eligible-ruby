@@ -8,8 +8,8 @@ describe 'Eligible::V1_0::Reports::DenialReports' do
 
   describe '.retrieve' do
     it 'should call Eligible.request with proper url' do
-      params[:id] = 'rdre_9bcb7c733e0242439575a299'
-      allow(Eligible).to receive(:request).with(:get, '/reports/denial_reports/rdre_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
+      params[:id] = 'exec_den_rpt_9bcb7c733e0242439575a299'
+      allow(Eligible).to receive(:request).with(:get, '/reports/denial_reports/exec_den_rpt_9bcb7c733e0242439575a299', api_key, params, {}).and_return([response, api_key])
       expect(Eligible::V1_0::Reports::DenialReports.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 
