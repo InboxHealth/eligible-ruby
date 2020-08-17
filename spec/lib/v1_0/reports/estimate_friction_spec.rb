@@ -13,7 +13,7 @@ describe 'Eligible::V1_0::Reports::EstimateFriction' do
       expect(Eligible::V1_0::Reports::EstimateFriction.retrieve(params[:id], api_key: api_key)).to eq 'success'
     end
 
-    it 'should raise error if insurance policy id is not present' do
+    it 'should raise error if estimate friction id is not present' do
       expect { Eligible::V1_0::Reports::EstimateFriction.retrieve(nil, api_key: api_key) }.to raise_error(ArgumentError)
     end
   end
