@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0.beta20 - 2020-08-17
+
+  - Added support for report API endpoint Eligible::V1_0::Reports::Collections
+  - Added support for report API endpoint Eligible::V1_0::Reports::DenialCounts
+  - Added support for report API endpoint Eligible::V1_0::Reports::DenialReports
+  - Added support for report API endpoint Eligible::V1_0::Reports::DistributionRatios
+  - Added support for report API endpoint Eligible::V1_0::Reports::FinancialMeasures
+
 ## 3.0.0.beta19 - 2020-07-28
   - Added refunds and balance_captures REST API endpoints
 
