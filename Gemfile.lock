@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eligible (3.0.0.beta20)
+    eligible (3.0.0.beta22)
       multi_json (~> 1.7)
       rest-client (~> 2.0.0)
 
