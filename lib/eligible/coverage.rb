@@ -12,6 +12,10 @@ module Eligible
       send_request :get, '/coverage/cost_estimates.json', params, opts
     end
 
+    def self.cost_estimate_post(params, opts = {})
+      send_request :post, '/coverage/cost_estimates.json', params, opts
+    end
+
     def self.batch_medicare_post(params, opts = {})
       send_request :post, '/medicare/coverage/batch.json', params, opts
     end
