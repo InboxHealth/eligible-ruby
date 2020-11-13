@@ -1,12 +1,16 @@
 # Changelog
 
-## 3.0.0.beta20 - 2020-08-17
+## 3.0.0.beta23 - 2020-11-13
+  - Bug fixes
 
-  - Added support for report API endpoint Eligible::V1_0::Reports::Collections
-  - Added support for report API endpoint Eligible::V1_0::Reports::DenialCounts
-  - Added support for report API endpoint Eligible::V1_0::Reports::DenialReports
-  - Added support for report API endpoint Eligible::V1_0::Reports::DistributionRatios
-  - Added support for report API endpoint Eligible::V1_0::Reports::FinancialMeasures
+## 3.0.0.beta22 - 2020-10-21
+  - Bug fixes
+
+## 3.0.0.beta21 - 2020-10-21
+  - Add post method for CE API to avoid 414 error with large X12 inputs
+
+## 3.0.0.beta20 - 2020-08-17
+  - Bug fixes
 
 ## 3.0.0.beta19 - 2020-07-28
   - Added refunds and balance_captures REST API endpoints
@@ -15,7 +19,7 @@
   - Added claim_submit endpoint API url for PatientStatement endpoint
 
 ## 3.0.0.beta17 - 2020-07-13
-  - Added support for report API endpoints
+  - Bug fixes
 
 ## 3.0.0.beta16 - 2020-07-10
   - Migrated "Patient" endpoint to "PatientRecord"
