@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eligible (3.0.0.beta23)
+    eligible (3.0.0.beta24)
       multi_json (~> 1.7)
       rest-client (~> 2.0.0)
 
@@ -17,7 +17,7 @@ GEM
     json (2.1.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.1104)
+    mime-types-data (3.2021.0225)
     multi_json (1.15.0)
     netrc (0.11.0)
     rake (12.3.0)

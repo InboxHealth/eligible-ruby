@@ -92,7 +92,8 @@ module Eligible
   @@test = false
   @@api_version = '1.5'
   @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
-  @@fingerprints = %w(a1cd762a9f4be0f3b6bdd6300e52c6ce8d7d67f5
+  @@fingerprints = %w(75132C1AB844500C6AD1F26B49C11D36933CE868
+                      a1cd762a9f4be0f3b6bdd6300e52c6ce8d7d67f5
                       36d6b6f98a2b9bcdf4321d1978553e23cf044b53
                       d93b7697100fe978ae0f78fbf2a2443cc1958ca3
                       896ce24f7a83eb656c040985fdb50ce39f90b813)
