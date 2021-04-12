@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0.beta25 - 2021-04-12
+  - Updated pinned GDS SSL certificate
+  
 ## 3.0.0.beta24 - 2021-04-01
   - Updated pinned GDS SSL certificate
 
