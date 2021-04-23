@@ -27,7 +27,7 @@ module Eligible
 
       private
 
-      def self.object_id(id_or_params)
+      def self.object_key(id_or_params)
         id_or_params.is_a?(Hash) ? Util.value(id_or_params, :id) : id_or_params
       end
 

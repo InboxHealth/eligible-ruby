@@ -6,15 +6,15 @@ module Eligible
       ENDPOINT_NAME = 'estimates'.freeze
 
       def self.process(id, opts = {})
-        send_request :post, "/#{endpoint_name}/#{object_id(id)}/process", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :post, "/#{endpoint_name}/#{object_key(id)}/process", rest_api_params(id), opts.merge(required_params: [:id])
       end
 
       def self.reestimate(id, opts = {})
-        send_request :post, "/#{endpoint_name}/#{object_id(id)}/reestimate", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :post, "/#{endpoint_name}/#{object_key(id)}/reestimate", rest_api_params(id), opts.merge(required_params: [:id])
       end
 
       def self.convert(id, opts = {})
-        send_request :post, "/#{endpoint_name}/#{object_id(id)}/convert", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :post, "/#{endpoint_name}/#{object_key(id)}/convert", rest_api_params(id), opts.merge(required_params: [:id])
       end
 
       def self.update(_params, _opts = {})

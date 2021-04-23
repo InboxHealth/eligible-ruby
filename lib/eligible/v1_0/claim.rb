@@ -10,15 +10,15 @@ module Eligible
       end
 
       def self.submit(id, opts = {})
-        send_request :post, "/#{endpoint_name}/#{object_id(id)}/submit", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :post, "/#{endpoint_name}/#{object_key(id)}/submit", rest_api_params(id), opts.merge(required_params: [:id])
       end
 
       def self.correct(id, opts = {})
-        send_request :post, "/#{endpoint_name}/#{object_id(id)}/correct", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :post, "/#{endpoint_name}/#{object_key(id)}/correct", rest_api_params(id), opts.merge(required_params: [:id])
       end
 
       def self.cancel(id, opts = {})
-        send_request :delete, "/#{endpoint_name}/#{object_id(id)}/cancel", rest_api_params(id), opts.merge(required_params: [:id])
+        send_request :delete, "/#{endpoint_name}/#{object_key(id)}/cancel", rest_api_params(id), opts.merge(required_params: [:id])
       end
     end
   end
